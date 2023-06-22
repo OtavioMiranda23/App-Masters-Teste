@@ -1,0 +1,41 @@
+.container {
+    background: var(--background-color-white);
+    text-align: center;
+}
+.titleContainer {
+    font-size: 1.5rem;
+    color: var(--text-title-primary);
+}
+
+.cardContainer {
+
+    justify-content: space-between;
+    margin: 1rem;
+    padding: .5rem;
+    background: var(--background-color-white);
+    border-radius: .4rem;
+    border: 1px solid #b5b4b4;    
+}
+
+.cardTitle {
+    color: var(--text-title-primary-dark);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.genre {
+    color: var(--text-body);
+    font-size: 1.1rem;
+}
+
+.imageContainer {
+}
+
+.cardText {
+    margin: 0 auto;
+    padding: .5rem;
+
+    vertical-align: middle;
+}
+.image {
+    border-radius: 0.4rem;
+}

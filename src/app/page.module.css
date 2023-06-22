@@ -1,0 +1,6 @@
+.main {
+    background: var(--background-color-white);
+}
+.containerCard {
+    padding: 2rem;
+}
