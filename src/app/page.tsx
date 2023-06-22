@@ -1,37 +1,25 @@
-"use client";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+"use client"
 import styles from "./page.module.css";
 import { useFetch } from "@/hooks/useFetch";
+import { Card } from "@/components/card/card";
+import { IGames } from "@/types/games";
 
-interface IGames {
-  id: number;
-  title: string;
-  thumbnail: string;
-  genre: string;
-}
 export default function Home() {
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data";
-
-  const { data: games } = useFetch<IGames[]>(url);
-
+  const config = {
+    headers: {
+      "dev-email-address": "otaviomiranda@usp.br",
+    },
+  };
+  //O hook useFetch retorna o estado do carregamento e a lista de jogos;
+  /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente
+   a partir do uso dos Generics, garantindo o desaclopamento.
+  */
+  const { data: games, isFetching, error } = useFetch<IGames[]>(url, config);
   return (
     <main className={styles.main}>
-      <h1>Games</h1>
-      {games?.map((game) => {
-        return (
-          <div key={game.id}>
-            <h2>{game.title}</h2>
-            {/* <Image 
-            src={game.thumbnail}
-            alt={`Imagem do jogo ${game.title}`}
-            height={100}
-            width={100}
-            /> */}
-            <strong>{game.genre}</strong>
-          </div>
-        );
-      })}
+      <p>{isFetching && "Loader"}</p>
+      <Card data={games} />
     </main>
   );
 }
