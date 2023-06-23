@@ -2,7 +2,7 @@ import { IGames } from "@/types/games";
 import styles from "./card.module.css";
 import Image from "next/image";
 
-export function Card({ data }: { data: IGames[] | null }) {
+export function Card({ data }: { data: IGames[] | undefined }) {
   return (
     <div className={styles.container}>
       <h1 className={styles.titleContainer}>Games</h1>

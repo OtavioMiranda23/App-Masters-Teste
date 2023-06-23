@@ -1,18 +1,27 @@
-import Image from "next/image" 
-export function Header() {
-    return (
-        <header>
-            <div>
-                <Image 
-                src="/logo.svg"
-                height={100}
-                width={150}
-                alt="Logo"
-                />
-            </div>
-            <div>
+import Image from "next/image";
+import styles from "./header.module.css";
+import { useState } from "react";
+interface IHeader {
+  data: (search: string) => void
+}
+export function Header(props: IHeader) {
 
-            </div>
-        </header>
-    )
+
+
+  return (
+    <header className={styles.header}>
+      <div className={styles.logoContainer}>
+        <Image src="/logo.svg" height={100} width={150} alt="Logo" />
+      </div>
+      <div className={styles.searchContainer}>
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Busque um título..."
+          onChange={(e) => props.data(e.target.value)}
+        />
+        <Image src="/search.svg" height={30} width={30} alt="Search symbol" />
+      </div>
+    </header>
+  );
 }
