@@ -30,33 +30,46 @@ export default function Home() {
 
   //Lógica search e genre
   useEffect(() => {
+    //Se houver conteúdo digitado, torna o setSelectedGenre false e carrega o array no state setSelectedData;
     if (search.length > 0) {
       setSelectedGenre("");
       const filteredTitles = games?.filter((game) =>
         game.title.toLowerCase().includes(search.toLowerCase())
       );
       setSelectedData(filteredTitles);
-    } else if (selectedGenre) {
+    }
+    //Se houver seleção de gênero, então carrega a o array no state setSelectedData;
+    //No componente Card, o search é zerado com uma callback;
+    else if (selectedGenre) {
       const filteredGenre = games?.filter((game) =>
         game.genre.includes(selectedGenre)
       );
       setSelectedData(filteredGenre);
-    } else {
+    }
+    //Caso nada ocorra, o array original da api preenche o state;
+    else {
       setSelectedData(games);
     }
   }, [games, search, selectedGenre]);
-  console.log(selectedData);
 
   return (
     <main className={styles.main}>
       <Header data={setSearch} />
       <p>{isFetching && "Loader"}</p>
       <p>{errorMensage}</p>
-      {errorMensage === null && (
-        <div className={styles.containerCard}>
-          <Card data={selectedData} setSearch={setSearch} setSelection={setSelectedGenre} />
-        </div>
-      )}
+      {errorMensage === null &&
+        selectedData?.map((card: IGames) => {
+          return (
+            <Card
+              key={card.id}
+              genre={card.genre}
+              title={card.title}
+              thumbnail={card.thumbnail}
+              setSearch={setSearch}
+              setSelection={setSelectedGenre}
+            />
+          );
+        })}
     </main>
   );
 }

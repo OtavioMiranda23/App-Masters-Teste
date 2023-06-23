@@ -1,10 +1,10 @@
-import { IGames } from "@/types/games";
 import styles from "./card.module.css";
 import Image from "next/image";
-import { ReactHTMLElement } from "react";
 
 interface ICard {
-  data: IGames[] | undefined;
+  title: string;
+  genre: string;
+  thumbnail: string;
   setSelection: (genre: string) => void;
   setSearch: (letter: string) => void;
 }
@@ -13,34 +13,28 @@ export function Card(props: ICard) {
   return (
     <div className={styles.container}>
       <h1 className={styles.titleContainer}>Games</h1>
-
-      {props.data?.map((game) => {
-        return (
-          <div key={game.id} className={styles.cardContainer}>
-            <div className={styles.cardText}>
-              <h2 className={styles.cardTitle}>{game.title}</h2>
-              <p
-                onClick={() =>{ 
-                  props.setSelection(game.genre),
-                  props.setSearch('')
-                }}
-                className={styles.genre}
-              >
-                {game.genre}
-              </p>
-            </div>
-            <div className={styles.imageContainer}>
-              <Image
-                src={game.thumbnail}
-                alt={`Imagem do jogo ${game.title}`}
-                height={100}
-                width={150}
-                className={styles.image}
-              />
-            </div>
-          </div>
-        );
-      })}
+      <div className={styles.cardContainer}>
+        <div className={styles.cardText}>
+          <h2 className={styles.cardTitle}>{props.title}</h2>
+          <p
+            onClick={() => {
+              props.setSelection(props.genre), props.setSearch("");
+            }}
+            className={styles.genre}
+          >
+            {props.genre}
+          </p>
+        </div>
+        <div className={styles.imageContainer}>
+          <Image
+            src={props.thumbnail}
+            alt={`Imagem do jogo ${props.title}`}
+            height={100}
+            width={150}
+            className={styles.image}
+          />
+        </div>
+      </div>
     </div>
   );
 }
