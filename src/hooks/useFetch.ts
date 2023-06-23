@@ -1,10 +1,10 @@
 "use client"
 import axios, { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
-import { setTimeout } from "timers";
+
 
 export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) {
-    const [data, setData] = useState<T | null>(null);
+    const [data, setData] = useState<T | undefined>(undefined);
     const [isFetching, setIsFetching] = useState(true);
     const [errorMensage, setErrorMensage] = useState<string | null>(null);
 

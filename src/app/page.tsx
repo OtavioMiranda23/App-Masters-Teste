@@ -8,12 +8,13 @@ import { useState } from "react";
 
 export default function Home() {
   const [search, setSearch] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data";
   const config = {
     headers: {
       "dev-email-address": "otaviomiranda@usp.br",
     },
-    timeout: 5000,
+    timeout: 15000,
   };
   //O hook useFetch retorna o estado do carregamento e a lista de jogos;
   /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente
@@ -26,8 +27,13 @@ export default function Home() {
   } = useFetch<IGames[]>(url, config);
 
   const filteredTitles =
-    search.length > 0 ? games?.filter((game) => game.title.includes(search)) : [];
-    console.log(filteredTitles);
+    search.length > 0
+      ? games?.filter((game) => game.title.includes(search)) : games;
+
+  const filteredGenre = games?.filter((game) =>
+    game.genre.includes(selectedGenre)
+  );
+  console.log(selectedGenre);
   return (
     <main className={styles.main}>
       <Header data={setSearch} />
@@ -35,7 +41,7 @@ export default function Home() {
       <p>{errorMensage}</p>
       {errorMensage === null && (
         <div className={styles.containerCard}>
-          <Card data={filteredTitles} />
+          <Card data={filteredTitles} setSelection={setSelectedGenre} />
         </div>
       )}
     </main>

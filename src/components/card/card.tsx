@@ -2,17 +2,23 @@ import { IGames } from "@/types/games";
 import styles from "./card.module.css";
 import Image from "next/image";
 
-export function Card({ data }: { data: IGames[] | undefined }) {
+interface ICard {
+  data: IGames[] |  undefined,
+  setSelection: (genre:string)=> void
+}
+
+export function Card(props: ICard) {
   return (
     <div className={styles.container}>
       <h1 className={styles.titleContainer}>Games</h1>
 
-      {data?.map((game) => {
+      {props.data?.map((game) => {
         return (
+          
           <div key={game.id} className={styles.cardContainer}>
             <div className={styles.cardText}>
               <h2 className={styles.cardTitle}>{game.title}</h2>
-              <p className={styles.genre}>{game.genre}</p>
+              <p onClick={()=> props.setSelection(game.genre)} className={styles.genre}>{game.genre}</p>
             </div>
             <div className={styles.imageContainer}>
               <Image
