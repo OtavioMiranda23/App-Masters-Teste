@@ -4,11 +4,13 @@ import { useFetch } from "@/hooks/useFetch";
 import { Card } from "@/components/card/card";
 import { IGames } from "@/types/games";
 import { Header } from "@/components/header/header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
+
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data";
   const config = {
     headers: {
@@ -26,14 +28,25 @@ export default function Home() {
     errorMensage,
   } = useFetch<IGames[]>(url, config);
 
-  const filteredTitles =
-    search.length > 0
-      ? games?.filter((game) => game.title.includes(search)) : games;
+  //Lógica search e genre
+  useEffect(() => {
+    if (search.length > 0) {
+      setSelectedGenre("");
+      const filteredTitles = games?.filter((game) =>
+        game.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setSelectedData(filteredTitles);
+    } else if (selectedGenre) {
+      const filteredGenre = games?.filter((game) =>
+        game.genre.includes(selectedGenre)
+      );
+      setSelectedData(filteredGenre);
+    } else {
+      setSelectedData(games);
+    }
+  }, [games, search, selectedGenre]);
+  console.log(selectedData);
 
-  const filteredGenre = games?.filter((game) =>
-    game.genre.includes(selectedGenre)
-  );
-  console.log(selectedGenre);
   return (
     <main className={styles.main}>
       <Header data={setSearch} />
@@ -41,7 +54,7 @@ export default function Home() {
       <p>{errorMensage}</p>
       {errorMensage === null && (
         <div className={styles.containerCard}>
-          <Card data={filteredTitles} setSelection={setSelectedGenre} />
+          <Card data={selectedData} setSearch={setSearch} setSelection={setSelectedGenre} />
         </div>
       )}
     </main>

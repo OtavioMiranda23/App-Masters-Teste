@@ -1,10 +1,10 @@
 import Image from "next/image";
 import styles from "./header.module.css";
-import { useState } from "react";
 interface IHeader {
   data: (search: string) => void;
 }
 export function Header(props: IHeader) {
+
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>

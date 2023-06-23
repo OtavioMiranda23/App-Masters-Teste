@@ -1,10 +1,12 @@
 import { IGames } from "@/types/games";
 import styles from "./card.module.css";
 import Image from "next/image";
+import { ReactHTMLElement } from "react";
 
 interface ICard {
-  data: IGames[] |  undefined,
-  setSelection: (genre:string)=> void
+  data: IGames[] | undefined;
+  setSelection: (genre: string) => void;
+  setSearch: (letter: string) => void;
 }
 
 export function Card(props: ICard) {
@@ -14,11 +16,18 @@ export function Card(props: ICard) {
 
       {props.data?.map((game) => {
         return (
-          
           <div key={game.id} className={styles.cardContainer}>
             <div className={styles.cardText}>
               <h2 className={styles.cardTitle}>{game.title}</h2>
-              <p onClick={()=> props.setSelection(game.genre)} className={styles.genre}>{game.genre}</p>
+              <p
+                onClick={() =>{ 
+                  props.setSelection(game.genre),
+                  props.setSearch('')
+                }}
+                className={styles.genre}
+              >
+                {game.genre}
+              </p>
             </div>
             <div className={styles.imageContainer}>
               <Image
