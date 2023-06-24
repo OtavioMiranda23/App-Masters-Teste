@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styles from "./card.module.css";
 import Image from "next/image";
 
@@ -11,14 +12,21 @@ interface ICard {
 
 export function Card(props: ICard) {
   return (
-    <div className={styles.container}>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ease:"easeInOut" ,duration: 1.5 }}
+      className={styles.container}
+    >
       <div className={styles.containerCard}>
         <div className={styles.containerTop}>
           <Image
             src={props.thumbnail}
-            alt={`Imagem do jogo ${props.title}`}
-            height={150}
-            width={200}
+            alt={`${props.title} image game`}
+            width={365}
+            height={206}
+            layout="responsive"
+            priority
             className={styles.image}
           />
         </div>
@@ -35,31 +43,6 @@ export function Card(props: ICard) {
           <p className={styles.genre}>{props.genre}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
-/*
-      <div className={styles.cardContainer}>
-        <div className={styles.imageContainer}>
-          <Image
-            src={props.thumbnail}
-            alt={`Imagem do jogo ${props.title}`}
-            height={150}
-            width={200}
-            className={styles.image}
-          />
-        </div>
-        <h2 className={styles.cardTitle}>{props.title}</h2>
-        <div className={styles.genreContainer}>
-          <div className={styles.marker}></div>
-          <p
-            onClick={() => {
-              props.setSelection(props.genre), props.setSearch("");
-            }}
-            className={styles.genre}
-          >
-            {props.genre}
-          </p>
-        </div>
-      </div>
-*/

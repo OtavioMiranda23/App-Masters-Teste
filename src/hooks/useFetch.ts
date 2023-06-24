@@ -11,6 +11,35 @@ export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) 
 
     
     useEffect(() => {
+      axios.get(url, options)
+      .then(response => {
+          setData(response.data);
+        })
+        .catch(err => {
+          if (err.response){
+            const status = err.response.status;
+            if ([500, 502, 503,  504, 507, 508, 509].includes(status)) {
+              console.error("O servidor fahou em responder, tente recarregar a página.", status);
+              setErrorMensage("O servidor fahou em responder, tente recarregar a página.");
+            } else {
+              console.error("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.", status)
+              setErrorMensage("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.");
+            }
+          }
+          if (err.code === 'ECONNABORTED') {
+            console.error("O servidor demorou para responder, tente mais tarde.", err.code)
+            setErrorMensage("O servidor demorou para responder, tente mais tarde.");
+          }
+        })
+        .finally(()=> {
+          setIsFetching(false);
+      })
+    }, []);
+      return { data, isFetching, errorMensage }
+}
+
+/*
+ useEffect(() => {
         axios.get(url, options)
         .then(response => {
             setData(response.data);
@@ -35,5 +64,4 @@ export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) 
             setIsFetching(false);
         })
       }, []);
-      return { data, isFetching, errorMensage }
-}
+*/

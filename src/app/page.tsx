@@ -6,6 +6,7 @@ import { IGames } from "@/types/games";
 import { Header } from "@/components/header/header";
 import { useEffect, useState } from "react";
 import { GenreMenu } from "@/components/genreMenu/genreMenu";
+import Image from "next/image";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -17,7 +18,7 @@ export default function Home() {
     headers: {
       "dev-email-address": "otaviomiranda@usp.br",
     },
-    timeout: 15000,
+    timeout: 5000,
   };
   //O hook useFetch retorna o estado do carregamento e a lista de jogos;
   /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente
@@ -71,9 +72,17 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <Header data={setSearch} />
-
-      <p>{isFetching && "Loader"}</p>
-      <p>{errorMensage}</p>
+     
+      <div>{isFetching && 
+       <Image 
+       src="/loader.svg"
+       alt="Loading icon"
+       height={100}
+       width={100}
+       className={styles.loader}
+       />
+      }</div>
+      <p className={styles.errorMensage}>{errorMensage}</p>
       <GenreMenu 
       data={games}
       setSelection={setSelectedGenre}
@@ -97,28 +106,3 @@ export default function Home() {
     </main>
   );
 }
-/*
- //Lógica search e genre
-  useEffect(() => {
-    //Se houver conteúdo digitado, torna o setSelectedGenre false e carrega o array no state setSelectedData;
-    if (search.length > 0) {
-      setSelectedGenre("");
-      const filteredTitles = games?.filter((game) =>
-        game.title.toLowerCase().includes(search.toLowerCase())
-      );
-      setSelectedData(filteredTitles);
-    }
-    //Se houver seleção de gênero, então carrega a o array no state setSelectedData;
-    //No componente Card, o search é zerado com uma callback;
-    else if (selectedGenre) {
-      const filteredGenre = games?.filter((game) =>
-        game.genre.includes(selectedGenre)
-      );
-      setSelectedData(filteredGenre);
-    }
-    //Caso nada ocorra, o array original da api preenche o state;
-    else {
-      setSelectedData(games);
-    }
-  }, [games, search, selectedGenre]);
-*/

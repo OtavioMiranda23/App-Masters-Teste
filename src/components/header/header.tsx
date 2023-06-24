@@ -8,7 +8,7 @@ export function Header(props: IHeader) {
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
-        <Image src="/logo.svg" height={100} width={150} alt="Logo" />
+        <Image src="/logo.svg" height={100} width={250} alt="Logo" />
       </div>
       <div className={styles.searchContainer}>
         <input
