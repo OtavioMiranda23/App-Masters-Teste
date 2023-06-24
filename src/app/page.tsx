@@ -55,21 +55,24 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <Header data={setSearch} />
+
       <p>{isFetching && "Loader"}</p>
       <p>{errorMensage}</p>
-      {errorMensage === null &&
-        selectedData?.map((card: IGames) => {
-          return (
-            <Card
-              key={card.id}
-              genre={card.genre}
-              title={card.title}
-              thumbnail={card.thumbnail}
-              setSearch={setSearch}
-              setSelection={setSelectedGenre}
-            />
-          );
-        })}
+      <section className={styles.section}>
+        {errorMensage === null &&
+          selectedData?.map((card: IGames) => {
+            return (
+              <Card
+                key={card.id}
+                genre={card.genre}
+                title={card.title}
+                thumbnail={card.thumbnail}
+                setSearch={setSearch}
+                setSelection={setSelectedGenre}
+              />
+            );
+          })}
+      </section>
     </main>
   );
 }

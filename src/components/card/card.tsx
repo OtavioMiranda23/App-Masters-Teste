@@ -12,10 +12,46 @@ interface ICard {
 export function Card(props: ICard) {
   return (
     <div className={styles.container}>
-      <h1 className={styles.titleContainer}>Games</h1>
-      <div className={styles.cardContainer}>
-        <div className={styles.cardText}>
+      <div className={styles.containerCard}>
+        <div className={styles.containerTop}>
+          <Image
+            src={props.thumbnail}
+            alt={`Imagem do jogo ${props.title}`}
+            height={150}
+            width={200}
+            className={styles.image}
+          />
+        </div>
+        <div className={styles.containerCenter}>
           <h2 className={styles.cardTitle}>{props.title}</h2>
+        </div>
+        <div
+          onClick={() => {
+            props.setSelection(props.genre), props.setSearch("");
+          }}
+          className={styles.containerBotton}
+        >
+          <div className={styles.marker}></div>
+          <p className={styles.genre}>{props.genre}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+/*
+      <div className={styles.cardContainer}>
+        <div className={styles.imageContainer}>
+          <Image
+            src={props.thumbnail}
+            alt={`Imagem do jogo ${props.title}`}
+            height={150}
+            width={200}
+            className={styles.image}
+          />
+        </div>
+        <h2 className={styles.cardTitle}>{props.title}</h2>
+        <div className={styles.genreContainer}>
+          <div className={styles.marker}></div>
           <p
             onClick={() => {
               props.setSelection(props.genre), props.setSearch("");
@@ -25,16 +61,5 @@ export function Card(props: ICard) {
             {props.genre}
           </p>
         </div>
-        <div className={styles.imageContainer}>
-          <Image
-            src={props.thumbnail}
-            alt={`Imagem do jogo ${props.title}`}
-            height={100}
-            width={150}
-            className={styles.image}
-          />
-        </div>
       </div>
-    </div>
-  );
-}
+*/

@@ -1,41 +1,71 @@
 .container {
-    background: var(--background-color-white);
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
     text-align: center;
-}
-.titleContainer {
-    font-size: 1.5rem;
-    color: var(--text-title-primary);
+    
 }
 
-.cardContainer {
-
-    justify-content: space-between;
-    margin: 1rem;
-    padding: .5rem;
+.containerCard {
+    display: grid;
+    grid-template-rows: 3fr 1fr 2fr;
     background: var(--background-color-white);
     border-radius: .4rem;
-    border: 1px solid #b5b4b4;    
+    margin-top: 1rem;  
+    transition: box-shadow 0.3s ease-in-out;
+}
+.containerCard:hover {
+    box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.2);
+    transition: 250ms;
+  }
+
+
+.containerTop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}
+.image {
+    border-radius: .4rem;
+}
+
+.containerCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   padding-top: .5rem;
+   padding-bottom: .5rem;
+
 }
 
 .cardTitle {
-    color: var(--text-title-primary-dark);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 500;
 }
-.genre {
-    color: var(--text-body);
-    font-size: 1.1rem;
+
+.containerBotton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+}
+.containerBotton:hover{
+    cursor: pointer;
 }
 
-.imageContainer {
+.marker {
+    display: flex;
+    margin-right: 4px;
+    background-color: transparent;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    border: 3px solid rgb(10, 182, 255);
+    transition: border 0.2s ease-in-out
+}
+.containerBotton:hover .marker{
+    border: 6px solid rgb(10, 182, 255);
+    
 }
 
-.cardText {
-    margin: 0 auto;
-    padding: .5rem;
-
-    vertical-align: middle;
-}
-.image {
-    border-radius: 0.4rem;
-}
