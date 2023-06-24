@@ -17,7 +17,7 @@ export function Header(props: IHeader) {
           placeholder="Busque um título..."
           onChange={(e) => props.data(e.target.value)}
         />
-        <Image src="/search.svg" height={30} width={30} alt="Search symbol" />
+
       </div>
     </header>
   );

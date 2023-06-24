@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    overflow-x: scroll;
+    background: var(--background-color-dark);
+    color: rgb(236, 236, 236);   
+}
+@media (min-width:1500px) {
+   .container {
+    overflow-x: hidden;
+   }
+}
+.genre {
+    text-align: center;
+
+    min-width: 9rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: .2s ease-in;
+}
+.genre:hover {
+    cursor: pointer;
+    color: white;
+}
