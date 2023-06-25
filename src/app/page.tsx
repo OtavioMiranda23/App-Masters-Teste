@@ -14,6 +14,7 @@ import {
   sortAlphabetically,
 } from "@/utils/filter";
 import SearchContext from "@/context/SearchContext";
+import Head from "next/head";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -69,6 +70,9 @@ export default function Home() {
         resetFilters: restoreGameList,
       }}
     >
+      <Head>
+        <title>App Masters | Jogos</title>
+      </Head>
       <main className={styles.main}>
         <Header />
         <div>
