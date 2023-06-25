@@ -10,7 +10,7 @@ interface ICard {
   setSearch: (letter: string) => void;
 }
 
-export function Card(props: ICard) {
+export function Card({title, genre, thumbnail, setSelection, setSearch }: ICard) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -21,8 +21,8 @@ export function Card(props: ICard) {
       <div className={styles.containerCard}>
         <div className={styles.containerTop}>
           <Image
-            src={props.thumbnail}
-            alt={`${props.title} image game`}
+            src={thumbnail}
+            alt={`${title} image game`}
             width={365}
             height={206}
             layout="responsive"
@@ -31,16 +31,16 @@ export function Card(props: ICard) {
           />
         </div>
         <div className={styles.containerCenter}>
-          <h2 className={styles.cardTitle}>{props.title}</h2>
+          <h2 className={styles.cardTitle}>{title}</h2>
         </div>
         <div
           onClick={() => {
-            props.setSelection(props.genre), props.setSearch("");
+            setSelection(genre), setSearch("");
           }}
           className={styles.containerBotton}
         >
           <div className={styles.marker}></div>
-          <p className={styles.genre}>{props.genre}</p>
+          <p className={styles.genre}>{genre}</p>
         </div>
       </div>
     </motion.div>

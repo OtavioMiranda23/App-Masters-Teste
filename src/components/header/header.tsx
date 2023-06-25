@@ -1,21 +1,25 @@
 import Image from "next/image";
 import styles from "./header.module.css";
+import Link from "next/link";
 interface IHeader {
   data: (search: string) => void;
 }
-export function Header(props: IHeader) {
+export function Header({data}: IHeader) {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logoContainer}>
-        <Image src="/logo.svg" height={100} width={250} alt="Logo" />
-      </div>
+      <Link href="/">
+        <div className={styles.logoContainer}>
+          <Image src="/logo.svg" height={100} width={250} alt="Logo" />
+        </div>
+      
+      </Link>
       <div className={styles.searchContainer}>
         <input
           className={styles.input}
           type="text"
           placeholder="Busque um título..."
-          onChange={(e) => props.data(e.target.value)}
+          onChange={(e) => data(e.target.value)}
         />
 
       </div>

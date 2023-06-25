@@ -10,11 +10,13 @@
     width: 100%;
     text-align: center;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .section {
       grid-template-columns: repeat(1, 1fr);
     }
   }
+
+  
 
   .loader{
     position: absolute;
