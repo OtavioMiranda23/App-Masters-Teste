@@ -12,7 +12,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
-
+  const [refreshList, setRefreshList] = useState(false);
 
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data";
   const config = {
@@ -32,6 +32,13 @@ export default function Home() {
   } = useFetch<IGames[]>(url, config);
 
   //Lógica da busca:
+
+  function restoreGameList() {
+    setSelectedGenre("");
+    setSearch("");
+    setRefreshList(false)
+  }
+
   function filterByTitle(games: IGames[], query: string) {
     let searchQuery = query.toLowerCase();
     setSelectedGenre("");
@@ -62,17 +69,22 @@ export default function Home() {
       result = filterByTitle(result, search);
     }
 
-    if (selectedGenre ){
-      result = filterByGenre(result, selectedGenre)
+    if (selectedGenre) {
+      result = filterByGenre(result, selectedGenre);
     }
-    console.log(selectedGenre)
+    if (refreshList) {
+      restoreGameList();
+      
+    }
+
     result = sortAlphabetically(result);
     setSelectedData(result);
-  }, [games, search, selectedGenre]);
+  }, [games, search, selectedGenre, refreshList]);
 
+  console.log(refreshList)
   return (
     <main className={styles.main}>
-      <Header data={setSearch} />
+      <Header dataSearch={setSearch} setRefreshList={setRefreshList} />
 
       <div>
         {isFetching && (
