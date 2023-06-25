@@ -21,3 +21,7 @@
     cursor: pointer;
     color: white;
 }
+
+.ativo {
+    border-top: 2px solid white;
+}

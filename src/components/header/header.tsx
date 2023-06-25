@@ -1,12 +1,11 @@
 import Image from "next/image";
 import styles from "./header.module.css";
 import Link from "next/link";
-import { MouseEventHandler } from "react";
-interface IHeader {
-  dataSearch: (search: string) => void;
-  setRefreshList: (bool: boolean) => void;
-}
-export function Header({ dataSearch, setRefreshList }: IHeader) {
+import useSearchContext from "@/hooks/useSearchContext";
+
+export function Header() {
+  const { setSearch, resetFilters } = useSearchContext();
+
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -19,7 +18,7 @@ export function Header({ dataSearch, setRefreshList }: IHeader) {
           className={styles.input}
           type="text"
           placeholder="Busque um título..."
-          onChange={(e) => dataSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <div className={styles.restoreIcon}>
           <Image
@@ -27,7 +26,7 @@ export function Header({ dataSearch, setRefreshList }: IHeader) {
             alt="Refresh icon"
             width={35}
             height={35}
-            onClick={() => setRefreshList(true)}
+            onClick={() => resetFilters()}
           />
         </div>
       </div>
