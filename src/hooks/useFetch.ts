@@ -19,8 +19,8 @@ export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) 
           if (err.response){
             const status = err.response.status;
             if ([500, 502, 503,  504, 507, 508, 509].includes(status)) {
-              console.error("O servidor fahou em responder, tente recarregar a página.", status);
-              setErrorMensage("O servidor fahou em responder, tente recarregar a página.");
+              console.error("O servidor falhou em responder, tente recarregar a página.", status);
+              setErrorMensage("O servidor falhou em responder, tente recarregar a página.");
             } else {
               console.error("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.", status)
               setErrorMensage("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.");
@@ -48,8 +48,8 @@ export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) 
             if (err.response){
               const status = err.response.status;
               if (status === 500 || status === 502 || status === 503 ||  status === 504 || status === 507 || status === 508 || status === 509) {
-                console.error("O servidor fahou em responder, tente recarregar a página.", status);
-                setErrorMensage("O servidor fahou em responder, tente recarregar a página.");
+                console.error("O servidor falhou em responder, tente recarregar a página.", status);
+                setErrorMensage("O servidor falhou em responder, tente recarregar a página.");
               } else {
                 console.error("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.", status)
                 setErrorMensage("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde.");
