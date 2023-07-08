@@ -61,7 +61,7 @@
     word-break: keep-all;
 }
 
-.containerBotton {
+.containerBottom {
     background: var(--background-color-white);
     display: flex;
     justify-content: center;
@@ -72,7 +72,7 @@
 
  
 }
-.containerBotton:hover{
+.containerBottom:hover{
     cursor: pointer;
 }
 
@@ -86,8 +86,19 @@
     border: 3px solid rgb(10, 182, 255);
     transition: border 0.2s ease-in-out
 }
-.containerBotton:hover .marker{
+.containerBottom:hover .marker{
     border: 6px solid rgb(10, 182, 255);
     
 }
 
+.likeIcon {
+    filter: grayscale(100%);
+
+    transition: filter 0.15s ease-in-out; 
+}
+.likeIcon:hover {
+    filter: grayscale(50%);
+}
+.likeIcon:active {
+    filter: none;
+}

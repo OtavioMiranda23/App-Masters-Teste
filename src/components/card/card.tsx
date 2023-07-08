@@ -3,6 +3,7 @@ import styles from "./card.module.css";
 import Image from "next/image";
 import { IGames } from "@/types/games";
 import useSearchContext from "@/hooks/useSearchContext";
+import { StarsRating } from "../starsRating/starsRating";
 
 interface ICard {
   data: IGames;
@@ -36,8 +37,17 @@ export function Card({ data }: ICard) {
           onClick={() => {
             setGenre(data.genre), setSearch("");
           }}
-          className={styles.containerBotton}
+          className={styles.containerBottom}
         >
+          <Image
+            src="/like_red.svg"
+            alt="like icon"
+            width={25}
+            height={25}
+            priority
+            className={styles.likeIcon}            
+          />
+          <StarsRating />
           <div className={styles.marker}></div>
           <p className={styles.genre}>{data.genre}</p>
         </div>
