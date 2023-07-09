@@ -16,21 +16,7 @@ import {
 import SearchContext from "@/context/SearchContext";
 import Head from "next/head";
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 export default function Home() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDLLNhsFXgx8aJyi5gCojG46-ZVNAxCP_Q",
-    authDomain: "app-masters-345a7.firebaseapp.com",
-    projectId: "app-masters-345a7",
-    storageBucket: "app-masters-345a7.appspot.com",
-    messagingSenderId: "957466564118",
-    appId: "1:957466564118:web:81eee77b61aeed5df8c737",
-    measurementId: "G-HB876L1182",
-  };
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
