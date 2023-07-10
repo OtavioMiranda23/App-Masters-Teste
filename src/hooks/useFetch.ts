@@ -18,7 +18,7 @@ export function useFetch<T = unknown>(url:string, options?: AxiosRequestConfig) 
         .catch(err => {
           if (err.response){
             const status = err.response.status;
-            if ([500, 502, 503,  504, 507, 508, 509].includes(status)) {
+            if ([500, 502, 503, 504, 507, 508, 509].includes(status)) {
               console.error("O servidor falhou em responder, tente recarregar a página.", status);
               setErrorMensage("O servidor falhou em responder, tente recarregar a página.");
             } else {

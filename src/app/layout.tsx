@@ -1,3 +1,5 @@
+import { AuthProvider } from "@/context/AuthContext";
+import { SearchProvider } from "@/context/SearchContext";
 import "./globals.css";
 import { Inter, Montserrat } from "next/font/google";
 
@@ -19,7 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>{children}</body>
+      <AuthProvider>
+        <SearchProvider>
+          <body className={montserrat.className}>{children}</body>
+        </SearchProvider>
+      </AuthProvider>
     </html>
   );
 }
