@@ -5,6 +5,12 @@ import { IGames } from "@/types/games";
 import useSearchContext from "@/hooks/useSearchContext";
 import { StarsRating } from "../starsRating/starsRating";
 import { useState } from "react";
+import {
+  createLike,
+  deleteAllGames,
+  setLikedFalse,
+} from "@/context/RatingContext";
+import Rating from "@/types/rating";
 
 interface ICard {
   data: IGames;
@@ -13,6 +19,42 @@ interface ICard {
 export function Card({ data }: ICard) {
   const { setGenre, setSearch } = useSearchContext();
   const [liked, setLiked] = useState(false);
+  const [selectedStars, setSelectedStars] = useState(0);
+
+  const handleStarClick = async (selectedStars: number) => {
+    setSelectedStars(selectedStars);
+
+    await testarDb(
+      "wZR8Jxbt8Zf9m5xPunS78jwGSjz2",
+      data.id,
+      liked,
+      selectedStars
+    );
+  };
+  const handleLike = () => {
+    const newLiked = !liked;
+
+    setLiked(newLiked);
+    console.log(data.id);
+    testarDb("wZR8Jxbt8Zf9m5xPunS78jwGSjz2", data.id, newLiked, selectedStars);
+  };
+
+  async function testarDb(
+    userId: string,
+    gameId: number,
+    liked: boolean,
+    rating: number
+  ) {
+    const teste = {
+      userId: userId,
+      gameId: gameId,
+      liked: liked,
+      rating: rating,
+    }; //Age of Conan: Unchained
+    console.log("TESTANDO: CRIAR LIKE " + teste);
+    await createLike(teste);
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -37,7 +79,7 @@ export function Card({ data }: ICard) {
         </div>
         <div className={styles.containerBottom}>
           <Image
-            onClick={() => setLiked(!liked)}
+            onClick={handleLike}
             className={`${
               liked ? styles.likeIconActive : styles.likeIconNotActive
             }`}
@@ -47,7 +89,7 @@ export function Card({ data }: ICard) {
             height={25}
             priority
           />
-          <StarsRating totalStars={5} />
+          <StarsRating totalStars={4} onStarClick={handleStarClick} />
 
           <div
             className={styles.marker}

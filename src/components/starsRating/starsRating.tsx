@@ -3,9 +3,10 @@ import styles from "./starsRating.module.css";
 
 interface IStars {
   totalStars: number;
+  onStarClick: (selectedStars: number) => void;
 }
 
-export function StarsRating({ totalStars }: IStars) {
+export function StarsRating({ totalStars, onStarClick }: IStars) {
   const [hoveredStars, setHoveredStars] = useState(0);
   const [selectedStars, setSelectedStars] = useState(0);
 
@@ -19,6 +20,7 @@ export function StarsRating({ totalStars }: IStars) {
 
   const handleClick = (index: number) => {
     setSelectedStars(index);
+    onStarClick(index);
   };
 
   const renderStars = () => {

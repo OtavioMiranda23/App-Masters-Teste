@@ -36,16 +36,6 @@ export default function Home() {
     errorMensage,
   } = useFetch<IGames[]>(config.url, config.axiosConfig);
 
-  async function testarDb() {
-    const teste = {
-      userId: "wZR8Jxbt8Zf9m5xPunS78jwGSjz2",
-      gameId: "301",
-      liked: true,
-      rating: 3,
-    }; //Age of Conan: Unchained
-    console.log("TESTANDO: CRIAR LIKE " + teste);
-    await createLike(teste);
-  }
 
   //Lógica da busca:
   useEffect(() => {
@@ -88,7 +78,6 @@ export default function Home() {
         </div>
         <p className={styles.errorMensage}>{errorMensage}</p>
         <GenreMenu data={games} />
-        <button onClick={() => testarDb()}>teste criar like</button>
         {user && <h4>{user.email} está logado!</h4>}
         <section className={styles.section}>
           {errorMensage === null &&

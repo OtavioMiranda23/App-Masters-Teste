@@ -1,7 +1,7 @@
 
 export default interface Rating{
-  gameId: string;
   userId: string;
+  gameId: number;
   liked: boolean;
   rating: number;
 }
