@@ -7,6 +7,8 @@ import {
   User,
   setPersistence,
   browserSessionPersistence,
+  inMemoryPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { DocumentData, doc, getDoc, getFirestore } from "firebase/firestore";
@@ -77,7 +79,7 @@ export function AuthProvider({
       // TODO: Verificar se email é um email
       const res = await signInWithEmailAndPassword(auth, email, password);
       setUser(res.user);
-      setPersistence(auth, browserSessionPersistence)
+      setPersistence(auth, browserLocalPersistence)
         .then(() => {
           router.push("/");
         })
