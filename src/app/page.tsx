@@ -78,7 +78,7 @@ export default function Home() {
         </div>
         <p className={styles.errorMensage}>{errorMensage}</p>
         <GenreMenu data={games} />
-        {user && <h4>{user.email} está logado!</h4>}
+
         <section className={styles.section}>
           {errorMensage === null &&
             selectedData?.map((game: IGames) => {

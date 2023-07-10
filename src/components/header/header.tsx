@@ -2,9 +2,11 @@ import Image from "next/image";
 import styles from "./header.module.css";
 import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
+import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
   const { setSearch, resetFilters } = useSearchContext();
+  const { user, isLoading } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -30,6 +32,7 @@ export function Header() {
           onChange={(e) => setSearch(e.target.value)}
         />
             <Link href="/auth" className={styles.entrar}>Entrar</Link>
+            {user && <h4>{user.email} está logado!</h4>}
       </div>
     </header>
   );
