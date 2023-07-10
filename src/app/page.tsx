@@ -21,10 +21,10 @@ import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
   const { user, isLoading } = useAuth();
-  const { search, genre:selectedGenre } = useSearchContext();
+  const { search, genre: selectedGenre } = useSearchContext();
   const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
 
-  getLikesByUser(user.uid);
+  user && getLikesByUser(user.uid);
 
   //O hook useFetch retorna o estado do carregamento e a lista de jogos;
   /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente
@@ -36,10 +36,14 @@ export default function Home() {
     errorMensage,
   } = useFetch<IGames[]>(config.url, config.axiosConfig);
 
-
-  async function testarDb(){
-    const teste = { userId:"wZR8Jxbt8Zf9m5xPunS78jwGSjz2", gameId: "301", liked:true, rating:3 }; //Age of Conan: Unchained
-    console.log("TESTANDO: CRIAR LIKE " + teste)
+  async function testarDb() {
+    const teste = {
+      userId: "wZR8Jxbt8Zf9m5xPunS78jwGSjz2",
+      gameId: "301",
+      liked: true,
+      rating: 3,
+    }; //Age of Conan: Unchained
+    console.log("TESTANDO: CRIAR LIKE " + teste);
     await createLike(teste);
   }
 
@@ -66,33 +70,33 @@ export default function Home() {
 
   return (
     <>
-        <Head>
-          <title>App Masters | Jogos</title>
-        </Head>
-        <main className={styles.main}>
-          <Header />
-          <div>
-            {isFetching && (
-              <Image
-                src="/loader.svg"
-                alt="Loading icon"
-                height={100}
-                width={100}
-                className={styles.loader}
-              />
-            )}
-          </div>
-          <p className={styles.errorMensage}>{errorMensage}</p>
-          <GenreMenu data={games} />
-          <button onClick={() => testarDb()}>teste criar like</button>
-          {user && <h4>{user.email} está logado!</h4>}
-          <section className={styles.section}>
-            {errorMensage === null &&
-              selectedData?.map((game: IGames) => {
-                return <Card key={game.id} data={game} />;
-              })}
-          </section>
-        </main>
+      <Head>
+        <title>App Masters | Jogos</title>
+      </Head>
+      <main className={styles.main}>
+        <Header />
+        <div>
+          {isFetching && (
+            <Image
+              src="/loader.svg"
+              alt="Loading icon"
+              height={100}
+              width={100}
+              className={styles.loader}
+            />
+          )}
+        </div>
+        <p className={styles.errorMensage}>{errorMensage}</p>
+        <GenreMenu data={games} />
+        <button onClick={() => testarDb()}>teste criar like</button>
+        {user && <h4>{user.email} está logado!</h4>}
+        <section className={styles.section}>
+          {errorMensage === null &&
+            selectedData?.map((game: IGames) => {
+              return <Card key={game.id} data={game} />;
+            })}
+        </section>
+      </main>
     </>
   );
 }

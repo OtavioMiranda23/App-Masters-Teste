@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from
 import { useRouter } from 'next/navigation'
 
 interface IAuthContext {
-  user:User,
+  user:User |  null,
   isLoading:boolean,
   signUp: (email:string, password:string) => void,
   signIn: (email:string, password:string) => void,

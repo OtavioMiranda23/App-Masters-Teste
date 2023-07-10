@@ -1,13 +1,15 @@
-.container {
-    display: flex;
+.rating-stars {
+    display: inline-block;
+  }
+  
+  .star {
+    font-size: 2rem;
+    color: #ccc;
     cursor: pointer;
-}
-.input {
-visibility: hidden;
-}
-.star {
-    filter: grayscale(100%);
-}
-.star:hover {
-    filter: grayscale(15%);
-}
+  }
+  
+  .star:hover,
+  .star.active {
+    color: rgb(255, 166, 0);
+  }
+  

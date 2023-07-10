@@ -4,6 +4,7 @@ import Image from "next/image";
 import { IGames } from "@/types/games";
 import useSearchContext from "@/hooks/useSearchContext";
 import { StarsRating } from "../starsRating/starsRating";
+import { useState } from "react";
 
 interface ICard {
   data: IGames;
@@ -11,6 +12,7 @@ interface ICard {
 
 export function Card({ data }: ICard) {
   const { setGenre, setSearch } = useSearchContext();
+  const [liked, setLiked] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -33,22 +35,26 @@ export function Card({ data }: ICard) {
         <div className={styles.containerCenter}>
           <h2 className={styles.cardTitle}>{data.title}</h2>
         </div>
-        <div
-          onClick={() => {
-            setGenre(data.genre), setSearch("");
-          }}
-          className={styles.containerBottom}
-        >
+        <div className={styles.containerBottom}>
           <Image
+            onClick={() => setLiked(!liked)}
+            className={`${
+              liked ? styles.likeIconActive : styles.likeIconNotActive
+            }`}
             src="/like_red.svg"
             alt="like icon"
             width={25}
             height={25}
             priority
-            className={styles.likeIcon}            
           />
-          <StarsRating />
-          <div className={styles.marker}></div>
+          <StarsRating totalStars={5} />
+
+          <div
+            className={styles.marker}
+            onClick={() => {
+              setGenre(data.genre), setSearch("");
+            }}
+          ></div>
           <p className={styles.genre}>{data.genre}</p>
         </div>
       </div>

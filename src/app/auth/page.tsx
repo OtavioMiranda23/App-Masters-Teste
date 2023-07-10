@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import styles from "./page.module.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function FormLogin() {
   const { user, signUp, signIn} = useAuth();
@@ -34,7 +35,7 @@ export default function FormLogin() {
         <label>Password:</label>
         <input type="password" onChange={e => setPassword(e.target.value)}/>
         <button onClick={e => criarConta(e)}>Login</button>
-        <a href="/">Esqueci a senha!</a>
+        <Link href="/auth/register">Esqueci a senha!</Link>
       </form>
     </div>
   );

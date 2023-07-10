@@ -14,12 +14,6 @@ export function Header() {
         </div>
       </Link>
       <div className={styles.searchContainer}>
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="Busque um título..."
-          onChange={(e) => setSearch(e.target.value)}
-        />
         <div className={styles.restoreIcon}>
           <Image
             src="/refresh.svg"
@@ -27,8 +21,15 @@ export function Header() {
             width={35}
             height={35}
             onClick={() => resetFilters()}
-          />
-        </div>
+            />
+          </div>
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Busque um título..."
+          onChange={(e) => setSearch(e.target.value)}
+        />
+            <Link href="/auth" className={styles.entrar}>Entrar</Link>
       </div>
     </header>
   );

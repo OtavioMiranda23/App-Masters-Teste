@@ -91,14 +91,10 @@
     
 }
 
-.likeIcon {
+.likeIconNotActive {
     filter: grayscale(100%);
-
-    transition: filter 0.15s ease-in-out; 
+ 
 }
-.likeIcon:hover {
-    filter: grayscale(50%);
-}
-.likeIcon:active {
-    filter: none;
+.likeIconActive {
+        
 }
