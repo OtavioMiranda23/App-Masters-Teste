@@ -3,6 +3,8 @@ import { SearchProvider } from "@/context/SearchContext";
 import { RatingProvider } from "@/context/RatingContext";
 import "./globals.css";
 import { Inter, Montserrat } from "next/font/google";
+import { Header } from "@/components/header/header";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
@@ -22,9 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+            <Head>
+        <title>App Masters | Jogos</title>
+      </Head>
       <AuthProvider>
         <RatingProvider>
           <SearchProvider>
+            
             <body className={montserrat.className}>{children}</body>
           </SearchProvider>
         </RatingProvider>

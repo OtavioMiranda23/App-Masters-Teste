@@ -55,11 +55,10 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>App Masters | Jogos</title>
-      </Head>
+
       <main className={styles.main}>
-        <Header />
+      <Header/>
+
         <div>
           {isFetching && (
             <Image
