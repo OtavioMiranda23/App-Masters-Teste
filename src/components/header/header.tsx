@@ -3,6 +3,7 @@ import styles from "./header.module.css";
 import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
+import { deleteAllGames } from "@/context/RatingContext";
 
 export function Header() {
   const { setSearch, resetFilters } = useSearchContext();
@@ -33,6 +34,7 @@ export function Header() {
         />
             <Link href="/auth" className={styles.entrar}>Entrar</Link>
             {user && <button onClick={() => signOut()}>{user?.email} está logado!</button>}
+            <button onClick={()=> deleteAllGames()}>delete</button>
       </div>
     </header>
   );

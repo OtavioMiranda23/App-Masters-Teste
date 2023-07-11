@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/context/AuthContext";
 import { SearchProvider } from "@/context/SearchContext";
+import { RatingProvider } from "@/context/RatingContext";
 import "./globals.css";
 import { Inter, Montserrat } from "next/font/google";
 
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <SearchProvider>
-          <body className={montserrat.className}>{children}</body>
-        </SearchProvider>
+        <RatingProvider>
+          <SearchProvider>
+            <body className={montserrat.className}>{children}</body>
+          </SearchProvider>
+        </RatingProvider>
       </AuthProvider>
     </html>
   );

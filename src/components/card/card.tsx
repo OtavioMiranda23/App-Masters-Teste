@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import styles from "./card.module.css";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import {
   createLike,
   deleteAllGames,
   setLikedFalse,
+  useRating,
 } from "@/context/RatingContext";
 import Rating from "@/types/rating";
 import { useAuth } from "@/context/AuthContext";
@@ -19,6 +21,7 @@ interface ICard {
 
 export function Card({ data }: ICard) {
   const { setGenre, setSearch } = useSearchContext();
+  const { isGameLiked, handleLike } = useRating();
   const [liked, setLiked] = useState(false);
   const [selectedStars, setSelectedStars] = useState(0);
 
@@ -31,15 +34,15 @@ export function Card({ data }: ICard) {
       await testarDb(user.uid, data.id, liked, selectedStars);
     }
   };
-  const handleLike = () => {
-    const newLiked = !liked;
+  // const handleLike = () => {
+  //   const newLiked = !liked;
 
-    if(user){
-      setLiked(newLiked);
-      console.log(data.id);
-      testarDb(user.uid, data.id, newLiked, selectedStars);
-    }
-  };
+  //   if(user){
+  //     setLiked(newLiked);
+  //     console.log(data.id);
+  //     testarDb(user.uid, data.id, newLiked, selectedStars);
+  //   }
+  // };
 
   async function testarDb(
     userId: string,
@@ -81,9 +84,9 @@ export function Card({ data }: ICard) {
         </div>
         <div className={styles.containerBottom}>
           <Image
-            onClick={handleLike}
+            onClick={() => handleLike(data.id)}
             className={`${
-              liked ? styles.likeIconActive : styles.likeIconNotActive
+               isGameLiked(data.id) ? styles.likeIconActive : styles.likeIconNotActive
             }`}
             src="/like_red.svg"
             alt="like icon"
