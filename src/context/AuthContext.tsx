@@ -1,16 +1,13 @@
 "use client";
 import { useState, useEffect, createContext, useContext } from "react";
-import { app, auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   User,
-  setPersistence,
-  browserLocalPersistence,
   onAuthStateChanged,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { DocumentData, doc, getDoc, getFirestore } from "firebase/firestore";
 
 interface IAuthContext {
   user: User | null;
@@ -18,33 +15,27 @@ interface IAuthContext {
   signUp: (email: string, password: string) => void;
   signIn: (email: string, password: string) => void;
   signOut: () => void;
-  // isLoggedIn: () => boolean;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-export function AuthProvider({
-  children,
-}: {
+interface IAuthProviderProps {
   children: JSX.Element | JSX.Element[];
-}) {
+}
+export function AuthProvider({ children }: IAuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
-  function handleUser(user: User | null){
+  function handleUser(user: User | null) {
     setUser(user);
   }
 
   async function signUp(email: string, password: string) {
     try {
-      console.log(
-        `Tentando criar conta com email ${email} e senha ${password}`
-      );
       setIsLoading(true);
       // TODO: Verificar se email é um email
-      // auth.setPersistence(browserLocalPersistence);
       const res = await createUserWithEmailAndPassword(auth, email, password);
       router.push("/");
       setUser(res.user);
@@ -58,8 +49,6 @@ export function AuthProvider({
   async function signIn(email: string, password: string) {
     try {
       setIsLoading(true);
-      console.log(`Tentando logar com email ${email} e senha ${password}`);
-      // auth.setPersistence(browserLocalPersistence);
       const res = await signInWithEmailAndPassword(auth, email, password);
       setUser(res.user);
       router.push("/");
@@ -87,7 +76,6 @@ export function AuthProvider({
     return () => unsubscribe();
   }, []);
 
-
   return (
     <AuthContext.Provider
       value={{
@@ -96,7 +84,6 @@ export function AuthProvider({
         signIn,
         signOut,
         signUp,
-        // isLoggedIn,
       }}
     >
       {children}

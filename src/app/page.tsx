@@ -13,14 +13,11 @@ import {
   filterByGenre,
   sortAlphabetically,
 } from "@/utils/filter";
-import SearchContext, { SearchProvider } from "@/context/SearchContext";
 import Head from "next/head";
-import { AuthProvider, useAuth } from "@/context/AuthContext";
 import useSearchContext from "@/hooks/useSearchContext";
-import { createLike, getLikesByUser } from "@/context/RatingContext";
+// import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
-  const { isLoading } = useAuth();
   const { search, genre: selectedGenre } = useSearchContext();
   const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
 

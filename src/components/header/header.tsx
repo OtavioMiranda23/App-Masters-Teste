@@ -3,7 +3,7 @@ import styles from "./header.module.css";
 import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
-import { deleteAllGames } from "@/context/RatingContext";
+import { deleteAllGames, useRating } from "@/context/RatingContext";
 
 export function Header() {
   const { setSearch, resetFilters } = useSearchContext();
@@ -24,17 +24,32 @@ export function Header() {
             width={35}
             height={35}
             onClick={() => resetFilters()}
-            />
-          </div>
+          />
+        </div>
         <input
           className={styles.input}
           type="text"
           placeholder="Busque um título..."
           onChange={(e) => setSearch(e.target.value)}
         />
-            <Link href="/auth" className={styles.entrar}>Entrar</Link>
-            {user && <button onClick={() => signOut()}>{user?.email} está logado!</button>}
-            <button onClick={()=> deleteAllGames()}>delete</button>
+        <button onClick={() => deleteAllGames()}>delete</button>
+      </div>
+      <div style={{ display: "flex", padding: "2% 5%", gap:"5rem" }}>
+        {user ? (
+          <>
+            <p>Bem vindo, {user.email}!</p>
+            <a className={styles.entrar} onClick={() => signOut()} href="#">
+              Sair
+            </a>
+          </>
+        ) : (
+          <>
+            <p>Bem vindo, visitante!</p>
+            <Link href="/auth" className={styles.entrar}>
+              Entrar
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

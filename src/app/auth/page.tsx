@@ -29,7 +29,7 @@ export default function FormLogin() {
       <h1>Login</h1>
       <p>Novo no site?</p>
       <Link href="/auth/register"> Registre-se</Link>
-      <form>
+      <form className={styles.formContainer}>
         <label>Email:</label>
         <input type="email" onChange={e => setEmail(e.target.value)} />
         <label>Password:</label>

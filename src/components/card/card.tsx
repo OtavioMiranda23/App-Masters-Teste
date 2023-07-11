@@ -5,66 +5,50 @@ import Image from "next/image";
 import { IGames } from "@/types/games";
 import useSearchContext from "@/hooks/useSearchContext";
 import { StarsRating } from "../starsRating/starsRating";
-import { useState } from "react";
-import {
-  createLike,
-  deleteAllGames,
-  setLikedFalse,
-  useRating,
-} from "@/context/RatingContext";
-import Rating from "@/types/rating";
+import { useRating } from "@/context/RatingContext";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface ICard {
   data: IGames;
 }
 
 export function Card({ data }: ICard) {
+  const router = useRouter();
+  const { user } = useAuth(); 
   const { setGenre, setSearch } = useSearchContext();
-  const { isGameLiked, handleLike } = useRating();
-  const [liked, setLiked] = useState(false);
-  const [selectedStars, setSelectedStars] = useState(0);
+  const { handleLike, getRating, handleRating } = useRating();
 
-  const { user } = useAuth();
 
-  const handleStarClick = async (selectedStars: number) => {
-    setSelectedStars(selectedStars);
-
-    if (user) {
-      await testarDb(user.uid, data.id, liked, selectedStars);
-    }
+  const defaultRating = {
+    gameId: data.id,
+    liked: false,
+    rating: 0,
+    ratingId: "",
   };
-  // const handleLike = () => {
-  //   const newLiked = !liked;
+  const r = getRating(data.id) || defaultRating;
 
-  //   if(user){
-  //     setLiked(newLiked);
-  //     console.log(data.id);
-  //     testarDb(user.uid, data.id, newLiked, selectedStars);
-  //   }
-  // };
+  function setStars(newRating: number) {
+    if(!user){
+      router.push("/auth");
+      alert("Você precisa estar logado para fazer isso!")
+    }
+    handleRating(r.gameId, newRating);
+  }
 
-  async function testarDb(
-    userId: string,
-    gameId: number,
-    liked: boolean,
-    rating: number
-  ) {
-    const teste = {
-      userId: userId,
-      gameId: gameId,
-      liked: liked,
-      rating: rating,
-    }; //Age of Conan: Unchained
-    console.log("TESTANDO: CRIAR LIKE " + teste);
-    await createLike(teste);
+  function setLiked() {
+    if(!user){
+      router.push("/auth");
+      alert("Você precisa estar logado para fazer isso!")
+    }
+    handleLike(r.gameId);
   }
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ ease: "easeInOut", duration: 1.5 }}
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ease: "easeInOut", duration: 0.3 }}
       className={styles.container}
     >
       <div className={styles.containerCard}>
@@ -84,9 +68,9 @@ export function Card({ data }: ICard) {
         </div>
         <div className={styles.containerBottom}>
           <Image
-            onClick={() => handleLike(data.id)}
+            onClick={setLiked}
             className={`${
-               isGameLiked(data.id) ? styles.likeIconActive : styles.likeIconNotActive
+              r.liked ? styles.likeIconActive : styles.likeIconNotActive
             }`}
             src="/like_red.svg"
             alt="like icon"
@@ -94,8 +78,7 @@ export function Card({ data }: ICard) {
             height={25}
             priority
           />
-          <StarsRating totalStars={4} onStarClick={handleStarClick} />
-
+          <StarsRating rating={r.rating} onSetRating={setStars} />
           <div
             className={styles.marker}
             onClick={() => {

@@ -2,13 +2,12 @@ import { useState } from "react";
 import styles from "./starsRating.module.css";
 
 interface IStars {
-  totalStars: number;
-  onStarClick: (selectedStars: number) => void;
+  rating: number;
+  onSetRating: (newRating: number) => void;
 }
 
-export function StarsRating({ totalStars, onStarClick }: IStars) {
+export function StarsRating({ onSetRating, rating }: IStars) {
   const [hoveredStars, setHoveredStars] = useState(0);
-  const [selectedStars, setSelectedStars] = useState(0);
 
   const handleMouseEnter = (index: number) => {
     setHoveredStars(index);
@@ -19,19 +18,21 @@ export function StarsRating({ totalStars, onStarClick }: IStars) {
   };
 
   const handleClick = (index: number) => {
-    setSelectedStars(index);
-    onStarClick(index);
+    onSetRating(index);
   };
 
   const renderStars = () => {
     const stars = [];
 
-    for (let i = 1; i <= totalStars; i++) {
+    for (let i = 1; i <= 4; i++) {
       let starClassName = styles.star;
 
       if (i <= hoveredStars) {
-        starClassName += ` ${styles.active}`;
-      } else if (i <= selectedStars) {
+        starClassName += ` ${styles.hover}`;
+        if (i <= rating) {
+          starClassName += ` ${styles.active}`;
+        }
+      } else if (i <= rating) {
         starClassName += ` ${styles.active}`;
       }
 

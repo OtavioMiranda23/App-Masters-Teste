@@ -1,5 +1,5 @@
-
-export default interface Rating{
+export default interface Rating {
+  ratingId: string;
   gameId: number;
   liked: boolean;
   rating: number;

@@ -8,8 +8,14 @@
     cursor: pointer;
   }
   
-  .star:hover,
+  .star.hover{
+    color: rgb(255, 211, 129);
+
+  }
   .star.active {
     color: rgb(255, 166, 0);
+  }  
+  .star.inactive {
+    color: rgb(179, 179, 179);
   }
   

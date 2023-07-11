@@ -22,6 +22,7 @@ const SearchContext = createContext<ISearchContext>({
 export function SearchProvider({children}:{children:JSX.Element | JSX.Element[]}){
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [filterLiked, setFilterLiked] = useState(false);
 
   function restoreGameList() {
     setSelectedGenre("");
