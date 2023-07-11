@@ -20,11 +20,9 @@ import useSearchContext from "@/hooks/useSearchContext";
 import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
-  const { user, isLoading } = useAuth();
+  const { isLoading } = useAuth();
   const { search, genre: selectedGenre } = useSearchContext();
   const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
-
-  user && getLikesByUser(user.uid);
 
   //O hook useFetch retorna o estado do carregamento e a lista de jogos;
   /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente

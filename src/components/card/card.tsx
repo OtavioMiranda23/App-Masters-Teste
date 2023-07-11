@@ -11,6 +11,7 @@ import {
   setLikedFalse,
 } from "@/context/RatingContext";
 import Rating from "@/types/rating";
+import { useAuth } from "@/context/AuthContext";
 
 interface ICard {
   data: IGames;
@@ -21,22 +22,23 @@ export function Card({ data }: ICard) {
   const [liked, setLiked] = useState(false);
   const [selectedStars, setSelectedStars] = useState(0);
 
+  const { user } = useAuth();
+
   const handleStarClick = async (selectedStars: number) => {
     setSelectedStars(selectedStars);
 
-    await testarDb(
-      "wZR8Jxbt8Zf9m5xPunS78jwGSjz2",
-      data.id,
-      liked,
-      selectedStars
-    );
+    if (user) {
+      await testarDb(user.uid, data.id, liked, selectedStars);
+    }
   };
   const handleLike = () => {
     const newLiked = !liked;
 
-    setLiked(newLiked);
-    console.log(data.id);
-    testarDb("wZR8Jxbt8Zf9m5xPunS78jwGSjz2", data.id, newLiked, selectedStars);
+    if(user){
+      setLiked(newLiked);
+      console.log(data.id);
+      testarDb(user.uid, data.id, newLiked, selectedStars);
+    }
   };
 
   async function testarDb(

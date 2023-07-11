@@ -28,14 +28,14 @@ export default function FormLogin() {
     <div className={styles.container}>
       <h1>Login</h1>
       <p>Novo no site?</p>
-      <a href="/"> Registre-se</a>
+      <Link href="/auth/register"> Registre-se</Link>
       <form>
         <label>Email:</label>
         <input type="email" onChange={e => setEmail(e.target.value)} />
         <label>Password:</label>
         <input type="password" onChange={e => setPassword(e.target.value)}/>
         <button onClick={e => criarConta(e)}>Login</button>
-        <Link href="/auth/register">Esqueci a senha!</Link>
+        <Link href="/">Esqueci a senha!</Link>
       </form>
     </div>
   );

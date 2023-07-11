@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
   const { setSearch, resetFilters } = useSearchContext();
-  const { user, isLoading } = useAuth();
+  const { user, signOut } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -32,7 +32,7 @@ export function Header() {
           onChange={(e) => setSearch(e.target.value)}
         />
             <Link href="/auth" className={styles.entrar}>Entrar</Link>
-            {user && <h4>{user.email} está logado!</h4>}
+            {user && <button onClick={() => signOut()}>{user?.email} está logado!</button>}
       </div>
     </header>
   );
