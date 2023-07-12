@@ -27,31 +27,67 @@ export default function AuthPanel({
   setPassword,
   createSubmit,
   submitNameEvent,
-  forgetPass
+  forgetPass,
 }: IAuthPanel) {
-
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  function validateEmail(email: string) {
+    let error = "";
+    const expression = /^[^@]+@\w+(\.\w+)+\w$/;
+    if (expression.test(email) != true) {
+      return (error = "o campo não esta válido. ");
+    }
+    return error;
+  }
+  function validatePassword(password: string) {
+    let error = "";
+    if (password.length < 6) {
+      error = "A senha deve ter ao menos 6 caracteres";
+    }
+    return error;
+  }
+  function handleEmailChange(email: string) {
+    const error = validateEmail(email);
+    setEmailError(error);
+    setEmail(email);
+  }
+  function handlePasswordChange(password: string) {
+    const error = validatePassword(password);
+    setPasswordError(error);
+    setPassword(password);
+  }
   return (
     <>
       <div className={styles.titleContainer}>
         <div className={styles.container}>
           <h1 className={styles.title}>{title}</h1>
           <p>{subtitle}</p>
-          <Link className={styles.link} href={href}>{mensageHref}</Link>
+          <Link className={styles.link} href={href}>
+            {mensageHref}
+          </Link>
           <form className={styles.formContainer}>
             <label>Email:</label>
             <input
               className={styles.input}
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleEmailChange(e.target.value)}
             />
+            {emailError && <p className={styles.errorMensage}>{emailError}</p>}
             <label>Password:</label>
             <input
               className={styles.input}
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handlePasswordChange(e.target.value)}
             />
-            <button className={styles.button} onClick={(e) => createSubmit(e)}>{submitNameEvent}</button>
-            {forgetPass && <Link className={styles.link} href="/">Esqueci a senha!</Link>}
+            {passwordError && <p className={styles.errorMensage}>{passwordError}</p>}
+            <button className={emailError || passwordError ? styles.buttonDisable : styles.button} onClick={(e) => createSubmit(e)}>
+              {submitNameEvent}
+            </button>
+            {forgetPass && (
+              <Link className={styles.link} href="/">
+                Esqueci a senha!
+              </Link>
+            )}
           </form>
         </div>
       </div>

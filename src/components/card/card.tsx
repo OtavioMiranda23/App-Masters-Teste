@@ -101,7 +101,7 @@ export function Card({ data }: ICard) {
             priority
           />
           <StarsRating rating={r.rating} onSetRating={setStars} />
-          <Link href={data.game_url }>Acesse</Link>
+          <a target="_blank" href={data.game_url }>Acesse</a>
         </div>
       </div>
     </motion.div>

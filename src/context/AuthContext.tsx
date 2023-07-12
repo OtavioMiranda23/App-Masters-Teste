@@ -40,7 +40,8 @@ export function AuthProvider({ children }: IAuthProviderProps) {
       router.push("/");
       setUser(res.user);
     } catch (e) {
-      console.error("Erro ao logar usuário!");
+      console.error("Erro ao logar usuário!", e);
+      alert("Erro ao cadastrar usuário")
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +55,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
       router.push("/");
     } catch (e) {
       console.error("Erro ao logar usuário!");
+      alert("Erro ao logar usuário")
     } finally {
       setIsLoading(false);
     }

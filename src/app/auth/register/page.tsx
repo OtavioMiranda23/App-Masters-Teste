@@ -19,6 +19,7 @@ export default function Register() {
 
     if (!email || !password) {
       // TODO: Mostrar erros
+  
       return;
     }
 

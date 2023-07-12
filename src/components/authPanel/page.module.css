@@ -1,73 +1,95 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    margin: auto 0;
-    padding: 4rem;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin: auto 0;
+  padding: 4rem;
 }
 
 .formContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 .titleContainer {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.5rem;   
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5rem;
 }
 
 .title {
-    font-size: 2rem;
-    color: var(--text-title-primary-dark);
-    padding-bottom: .5rem;
+  font-size: 2rem;
+  color: var(--text-title-primary-dark);
+  padding-bottom: 0.5rem;
 }
 
 .input {
-    font-size: 1.2rem;
-    padding: .5rem;
-    margin-bottom: .5rem;
-    border: none;
-    border-left: 4px solid rgb(56, 89, 252) ;
-    background-color: rgba(56, 89, 252, 0.1);
-    border-radius: .2rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: none;
+  border-left: 4px solid rgb(56, 89, 252);
+  background: rgba(56, 89, 252, 0.1);
+  border-radius: 0.2rem;
+}
+
+.input:focus {
+  outline: none;
 }
 
 .button {
-    font-size: 1rem;
-    padding: 1rem 1rem;
-    margin:.5rem 0;
-    border: none;
-    background: var(--background-color-dark);
-    color: white;
-    font-weight: bold;
-    border-radius: .2rem;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background: linear-gradient(78.66deg, rgb(40, 73, 247) -22.45%, rgba(40, 119, 247, 1)) center bottom / cover no-repeat;
-  
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  margin: 0.5rem 0;
+  border: none;
+  background: var(--background-color-dark);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
 
-  }
-  
-  .button:active {
-    background: linear-gradient(78.66deg, rgb(24, 57, 222) -22.45%, rgba(24, 82, 222, 1)) center bottom / cover no-repeat;
+.button:hover {
+  background: linear-gradient(78.66deg, rgb(40, 73, 247) -22.45%, rgba(40, 119, 247, 1)) center bottom / cover no-repeat;
+}
 
-    transform: scale(0.95);
-  }
+.button:active {
+  background: linear-gradient(78.66deg, rgb(24, 57, 222) -22.45%, rgba(24, 82, 222, 1)) center bottom / cover no-repeat;
+  transform: scale(0.95);
+}
+.buttonDisable {
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  margin: 0.5rem 0;
+  border: none;
+  background: var(--background-color-dark);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.2rem;
+  cursor: not-allowed;
+}
 
-  .link {
-    color: var(--text-body);
-    padding-top:  .5rem 0;
-  }
-  .link:visited{
-    text-decoration: none;
-  }
-  .link:link{
-    text-decoration: solid;
-  }
-.link:hover{
-    text-decoration: underline;
+.link {
+  color: var(--text-body);
+  padding-top: 0.5rem 0;
+}
+
+.link:visited {
+  text-decoration: none;
+}
+
+.link:link {
+  text-decoration: solid;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.errorMensage {
+  display: flex;
+  color: red;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
 }
