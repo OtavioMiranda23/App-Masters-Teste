@@ -17,6 +17,7 @@ import {
 import Rating from "@/types/rating";
 import { createContext, useState, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
+import { IGames } from "@/types/games";
 
 const db = collection(store, "likes");
 
@@ -25,6 +26,7 @@ interface IRatingContext {
   handleLike: (gameId: number) => void;
   handleRating: (gameId: number, rating: number) => void;
   getRating: (gameId: number) => Rating | undefined;
+  getRatedGames: (games: IGames[]) => IGames[] | undefined;
 }
 
 interface IRatingProviderProps {
@@ -36,19 +38,19 @@ const RatingContext = createContext<IRatingContext>({
   handleLike: () => {},
   handleRating: () => {},
   getRating: () => undefined,
+  getRatedGames: () => undefined,
 });
 
 export function RatingProvider({ children }: IRatingProviderProps) {
-
   const { user } = useAuth();
   const [ratings, setRatings] = useState<Rating[]>([]);
 
-  /* 
-  * useEffect adiciona um listener no evento onSnapshot do firestore
-  * Assim, toda vez que houver alguma alteração na base de dados 
-  * em que um documento cujo id seja o do usuário logado,
-  * isso irá triggerar uma atualização do state `ratings`
-  */
+  /*
+   * useEffect adiciona um listener no evento onSnapshot do firestore
+   * Assim, toda vez que houver alguma alteração na base de dados
+   * em que um documento cujo id seja o do usuário logado,
+   * isso irá triggerar uma atualização do state `ratings`
+   */
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -58,11 +60,11 @@ export function RatingProvider({ children }: IRatingProviderProps) {
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const d = mapToRatings(querySnapshot.docs);
         setRatings(d);
-        console.log(d);
+        // console.log(d);
       });
     }
 
-    if(!user) setRatings([]);
+    if (!user) setRatings([]);
 
     return () => {
       if (unsubscribe) {
@@ -80,6 +82,11 @@ export function RatingProvider({ children }: IRatingProviderProps) {
     return ratings.find((r) => r.gameId === gameId);
   }
 
+  function getRatedGames(games: IGames[]) {
+    const gameIds = ratings.map((g) => g.gameId);
+    return games.filter((g) => gameIds.includes(g.id));
+  }
+
   // Essa função lida com escrever no banco de dados em si
   async function handleLike(gameId: number) {
     if (!user) return; // Se não estivermos logados não podemos fazer nada
@@ -94,7 +101,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
       // @ts-ignore
       return await setDoc(docRef, { liked: !r.data().liked }, { merge: true });
       // Como o liked é booleano, podemos usar uma função só para alternar entre like e dislike, apenas invertendo.
-    } 
+    }
 
     // Caso contrário, só um insert com valores padrões.
     return await addDoc(db, {
@@ -118,7 +125,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
       // @ts-ignore
       const docRef = doc(db, rating.ratingId);
       return await setDoc(docRef, { rating: finalRating }, { merge: true });
-    } 
+    }
 
     return await addDoc(db, {
       gameId,
@@ -131,9 +138,11 @@ export function RatingProvider({ children }: IRatingProviderProps) {
   // Não vi motivo para criar uma funcionalidade de apagar uma avaliação,
   // uma vez que foi avaliado, só faz sentido mudar a avaliação do jogo.
 
-  const getById = (userId:string) => query(db, where("userId", "==", userId)); 
+  const getById = (userId: string) => query(db, where("userId", "==", userId));
 
-  function mapToRatings(docs:QueryDocumentSnapshot<DocumentData, DocumentData>[]){
+  function mapToRatings(
+    docs: QueryDocumentSnapshot<DocumentData, DocumentData>[]
+  ) {
     return docs.map((doc) => {
       let rating = doc.data();
       return {
@@ -144,7 +153,6 @@ export function RatingProvider({ children }: IRatingProviderProps) {
         rating: rating.rating,
       };
     });
-
   }
   return (
     <RatingContext.Provider
@@ -153,6 +161,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
         handleLike,
         getRating,
         handleRating,
+        getRatedGames,
       }}
     >
       {children}

@@ -30,7 +30,6 @@ export default function AuthPanel({
   forgetPass
 }: IAuthPanel) {
 
-
   return (
     <>
       <div className={styles.titleContainer}>

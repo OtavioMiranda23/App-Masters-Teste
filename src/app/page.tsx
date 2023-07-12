@@ -18,8 +18,7 @@ import useSearchContext from "@/hooks/useSearchContext";
 // import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
-  const { search, genre: selectedGenre } = useSearchContext();
-  const [selectedData, setSelectedData] = useState<IGames[] | undefined>([]);
+  const { setGames, selectedData } = useSearchContext();
 
   //O hook useFetch retorna o estado do carregamento e a lista de jogos;
   /*Fiz uso do hook porque ele possibilita reutilizar a função em qualquer componente
@@ -31,55 +30,34 @@ export default function Home() {
     errorMensage,
   } = useFetch<IGames[]>(config.url, config.axiosConfig);
 
-
-  //Lógica da busca:
   useEffect(() => {
-    if (games == null) {
-      return;
+    if(games){
+      setGames(games);
     }
-
-    let isQuery = search.length > 0;
-    let result = games;
-
-    if (isQuery) {
-      result = filterByTitle(result, search);
-    }
-
-    if (selectedGenre) {
-      result = filterByGenre(result, selectedGenre);
-    }
-
-    result = sortAlphabetically(result);
-    setSelectedData(result);
-  }, [games, search, selectedGenre]);
+  },[games, setGames])
 
   return (
-    <>
+    <main className={styles.main}>
+      <div>
+        {isFetching && (
+          <Image
+            src="/loader.svg"
+            alt="Loading icon"
+            height={100}
+            width={100}
+            className={styles.loader}
+          />
+        )}
+      </div>
+      <p className={styles.errorMensage}>{errorMensage}</p>
+      {/* <GenreMenu data={games} /> */}
 
-      <main className={styles.main}>
-      <Header/>
-
-        <div>
-          {isFetching && (
-            <Image
-              src="/loader.svg"
-              alt="Loading icon"
-              height={100}
-              width={100}
-              className={styles.loader}
-            />
-          )}
-        </div>
-        <p className={styles.errorMensage}>{errorMensage}</p>
-        <GenreMenu data={games} />
-
-        <section className={styles.section}>
-          {errorMensage === null &&
-            selectedData?.map((game: IGames) => {
-              return <Card key={game.id} data={game} />;
-            })}
-        </section>
-      </main>
-    </>
+      <section className={styles.section}>
+        {errorMensage === null &&
+          selectedData?.map((game: IGames) => {
+            return <Card key={game.id} data={game} />;
+          })}
+      </section>
+    </main>
   );
 }

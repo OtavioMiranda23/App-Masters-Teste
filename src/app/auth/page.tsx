@@ -27,19 +27,16 @@ export default function FormLogin() {
   }
 
   return (
-    <>
-      <Header />
-      <AuthPanel
-        title={"Login"}
-        subtitle={"Não tem conta?"}
-        href={"/auth/register"}
-        mensageHref={"Registre-se"}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        createSubmit={criarConta}
-        submitNameEvent={"Login"}
-        forgetPass={true}
-      />
-    </>
+    <AuthPanel
+      title={"Login"}
+      subtitle={"Não tem conta?"}
+      href={"/auth/register"}
+      mensageHref={"Registre-se"}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      createSubmit={criarConta}
+      submitNameEvent={"Login"}
+      forgetPass={true}
+    />
   );
 }

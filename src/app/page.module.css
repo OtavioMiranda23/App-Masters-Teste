@@ -4,22 +4,24 @@
 
 .section {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: 1fr;
   gap: 1rem;
   width: 100%;
   text-align: center;
-  padding: 0 5%;
-  padding-bottom: 5%;
+  padding: 2rem 5%;
 }
-@media (min-width: 1024px) {
+
+@media (min-width: 767px) {
   .section {
-    padding: 0 10%;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 767px) {
+@media (min-width: 1240px) {
   .section {
-    grid-template-columns: repeat(1, 1fr);
+    padding-inline: 10%;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

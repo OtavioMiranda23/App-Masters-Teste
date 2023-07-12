@@ -26,19 +26,16 @@ export default function Register() {
   }
 
   return (
-    <>
-      <Header />
-      <AuthPanel
-        title="Criar Conta"
-        subtitle="Já tem uma conta?"
-        mensageHref="Faça o login"
-        href="/auth"
-        setEmail={setEmail}
-        setPassword={setPassword}
-        createSubmit={criarConta}
-        submitNameEvent="Criar Conta"
-        forgetPass={false}
-      />
-    </>
+    <AuthPanel
+      title="Criar Conta"
+      subtitle="Já tem uma conta?"
+      mensageHref="Faça o login"
+      href="/auth"
+      setEmail={setEmail}
+      setPassword={setPassword}
+      createSubmit={criarConta}
+      submitNameEvent="Criar Conta"
+      forgetPass={false}
+    />
   );
 }
