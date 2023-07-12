@@ -7,7 +7,7 @@
 
 .containerCard {
   display: grid;
-  grid-template-rows: 4fr 1fr 1fr;
+  grid-template-rows: 3fr 1fr 1fr;
   background: var(--background-color-white);
 
   border: 1px solid rgb(179, 179, 179);
@@ -38,29 +38,46 @@
 }
 
 .containerCenter {
+  margin: 0 .5rem;
   display: flex;
+  flex-direction: column;
   background: var(--background-color-white);
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .cardTitle {
+  display: flex;
+  
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--text-title-primary-dark);
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: keep-all;
+
 }
+.containerGenre {
+  display: flex; 
+  cursor: pointer;
+  justify-content: space-between;
+
+}
+.containerGenre:hover{
+  color: var(--text-title-primary-dark);
+}
+
+
 
 .containerBottom {
   background: var(--background-color-white);
   display: flex;
+  margin: 0 1rem;
   gap: 0.5rem;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   color: var(--text-title-primary-dark);
   border-bottom-left-radius: 0.4rem;

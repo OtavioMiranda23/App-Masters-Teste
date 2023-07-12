@@ -8,6 +8,7 @@ import { StarsRating } from "../starsRating/starsRating";
 import { useRating } from "@/context/RatingContext";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ICard {
   data: IGames;
@@ -15,10 +16,9 @@ interface ICard {
 
 export function Card({ data }: ICard) {
   const router = useRouter();
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const { setGenre, setSearch } = useSearchContext();
   const { handleLike, getRating, handleRating } = useRating();
-
 
   const defaultRating = {
     gameId: data.id,
@@ -29,17 +29,17 @@ export function Card({ data }: ICard) {
   const r = getRating(data.id) || defaultRating;
 
   function setStars(newRating: number) {
-    if(!user){
+    if (!user) {
       router.push("/auth");
-      alert("Você precisa estar logado para fazer isso!")
+      alert("Você precisa estar logado para fazer isso!");
     }
     handleRating(r.gameId, newRating);
   }
 
   function setLiked() {
-    if(!user){
+    if (!user) {
       router.push("/auth");
-      alert("Você precisa estar logado para fazer isso!")
+      alert("Você precisa estar logado para fazer isso!");
     }
     handleLike(r.gameId);
   }
@@ -53,6 +53,9 @@ export function Card({ data }: ICard) {
     >
       <div className={styles.containerCard}>
         <div className={styles.containerTop}>
+          
+
+
           <Image
             src={data.thumbnail}
             alt={`${data.title} image game`}
@@ -61,11 +64,30 @@ export function Card({ data }: ICard) {
             layout="responsive"
             priority
             className={styles.image}
-          />
+            />
         </div>
         <div className={styles.containerCenter}>
           <h2 className={styles.cardTitle}>{data.title}</h2>
+          <div
+            className={styles.containerGenre}
+            onClick={() => {
+              setGenre(data.genre), setSearch("");
+            }}
+          >
+            {/* <div
+            className={styles.marker}
+            onClick={() => {
+              setGenre(data.genre), setSearch("");
+            }}
+          >
+            
+          </div> */}
+            <p className={styles.genre}>{data.genre}</p>
+            <p>{data.platform}</p>
+            <p>{data.release_date?.substring(0,4)}</p>
+          </div>
         </div>
+
         <div className={styles.containerBottom}>
           <Image
             onClick={setLiked}
@@ -79,13 +101,7 @@ export function Card({ data }: ICard) {
             priority
           />
           <StarsRating rating={r.rating} onSetRating={setStars} />
-          <div
-            className={styles.marker}
-            onClick={() => {
-              setGenre(data.genre), setSearch("");
-            }}
-          ></div>
-          <p className={styles.genre}>{data.genre}</p>
+          <Link href={data.game_url }>Acesse</Link>
         </div>
       </div>
     </motion.div>
