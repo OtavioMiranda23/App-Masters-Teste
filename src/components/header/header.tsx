@@ -4,12 +4,10 @@ import styles from "./header.module.css";
 import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
-import { useRating } from "@/context/RatingContext";
-import { IGames } from "@/types/games";
-import { useFetch } from "@/hooks/useFetch";
-import config from "@/config/config";
-import { useEffect, useState } from "react";
+
+import {  useState } from "react";
 import { sortDir } from "@/context/SearchContext";
+import { IGames } from "@/types/games";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -23,11 +21,16 @@ export function Header() {
     genre,
     setGenre,
     filterByLiked,
-    sortedByRating
+    sortedByRating,
+    games
+    
   } = useSearchContext();
 
-
-
+    const uniqueGenre = Array.from(
+      new Set(games?.map((game: IGames) => game.genre))
+    );
+    uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
+  
   function verifySortByRatingRender(sortedByRating: sortDir | null) {
     if (sortedByRating === null) {
       return (
@@ -54,19 +57,6 @@ export function Header() {
       );
     }
   }
-  
-
-
-  
-  const {
-    data: games,
-    isFetching,
-    errorMensage,
-  } = useFetch<IGames[]>(config.url, config.axiosConfig);
-  const uniqueGenre = Array.from(
-    new Set(games?.map((game: IGames) => game.genre))
-  );
-  uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
 
   return (
     <header className={styles.header}>
@@ -116,7 +106,7 @@ export function Header() {
           </div>
           {user && (
             <>
-            <p>Filtros:</p>
+              <p>Filtros:</p>
               <Image
                 // className={`${
                 //   r.liked ? styles.likeIconActive : styles.likeIconNotActive
@@ -133,7 +123,11 @@ export function Header() {
                 width={25}
                 height={25}
                 priority
-                title={filterByLiked ? 'Remover filtro de curtidos' : 'Filtrar por curtidos'}
+                title={
+                  filterByLiked
+                    ? "Remover filtro de curtidos"
+                    : "Filtrar por curtidos"
+                }
               />
               <div
                 onClick={toggleSortByRating}
@@ -142,10 +136,9 @@ export function Header() {
                   color: "rgb(255, 166, 0)",
                   cursor: "pointer",
                 }}
-              >{verifySortByRatingRender(sortedByRating)}
-              
-               
-                
+              >
+                {verifySortByRatingRender(sortedByRating)}
+
                 {/* &#9733; &#11014; &#11015;  */}
               </div>
             </>

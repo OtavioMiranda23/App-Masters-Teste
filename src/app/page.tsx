@@ -23,10 +23,9 @@ export default function Home() {
   } = useFetch<IGames[]>(config.url, config.axiosConfig);
 
   useEffect(() => {
-    if (games) {
-      setGames(games);
-    }
+    setGames(games || []);
   }, [games, setGames]);
+
 
   return (
     <main className={styles.main}>
@@ -42,7 +41,6 @@ export default function Home() {
         )}
       </div>
       <p className={styles.errorMensage}>{errorMensage}</p>
-
 
       <section className={styles.section}>
         {errorMensage === null &&

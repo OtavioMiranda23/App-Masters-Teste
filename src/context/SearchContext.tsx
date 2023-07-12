@@ -21,6 +21,8 @@ interface ISearchContext {
   resetFilters: () => any;
   toggleSortByRating: () => any;
   sortedByRating: sortDir | null;
+  games: IGames[]
+
 }
 
 const SearchContext = createContext<ISearchContext>({
@@ -34,7 +36,8 @@ const SearchContext = createContext<ISearchContext>({
   resetFilters: () => {},
   toggleSortByRating: () => {},
   filterByLiked: false,
-  sortedByRating: null
+  sortedByRating: null,
+  games: []
 
 });
 
@@ -53,6 +56,8 @@ export function SearchProvider({
   const [filterByLiked, setFilterByLiked] = useState(false);
   const [sortedByRating, setSortedByRating] = useState<sortDir | null>(null);
 
+ 
+  
   function restoreGameList() {
     setSelectedGenre("");
     setSearch("");
@@ -73,7 +78,7 @@ export function SearchProvider({
       }
     });
   }
- 
+
   function setarGenre(newGenre: string) {
     setSelectedGenre(newGenre === selectedGenre ? "" : newGenre);
   }
@@ -174,7 +179,8 @@ export function SearchProvider({
         resetFilters: restoreGameList,
         toggleSortByRating,
         filterByLiked,
-        sortedByRating
+        sortedByRating,
+        games
         
       }}
     >
