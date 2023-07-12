@@ -8,7 +8,8 @@ import { useRating } from "@/context/RatingContext";
 import { IGames } from "@/types/games";
 import { useFetch } from "@/hooks/useFetch";
 import config from "@/config/config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { sortDir } from "@/context/SearchContext";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -22,8 +23,41 @@ export function Header() {
     genre,
     setGenre,
     filterByLiked,
+    sortedByRating
   } = useSearchContext();
 
+
+
+  function verifySortByRatingRender(sortedByRating: sortDir | null) {
+    if (sortedByRating === null) {
+      return (
+        <div>
+          <span>&#9733;</span>
+          <span>&#11015;</span>
+        </div>
+      );
+    }
+    if (sortedByRating == sortDir.DSC) {
+      return (
+        <div>
+          <span>&#9733;</span>
+          <span>&#11015;</span>
+        </div>
+      );
+    }
+    if (sortedByRating === sortDir.ASC) {
+      return (
+        <div>
+          <span>&#9733;</span>
+          <span className={styles.arrowDown}>&#11014;</span>
+        </div>
+      );
+    }
+  }
+  
+
+
+  
   const {
     data: games,
     isFetching,
@@ -108,8 +142,11 @@ export function Header() {
                   color: "rgb(255, 166, 0)",
                   cursor: "pointer",
                 }}
-              >
-                &#9733; &#11014; &#11015;
+              >{verifySortByRatingRender(sortedByRating)}
+              
+               
+                
+                {/* &#9733; &#11014; &#11015;  */}
               </div>
             </>
           )}

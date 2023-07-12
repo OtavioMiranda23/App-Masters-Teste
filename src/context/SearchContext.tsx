@@ -20,6 +20,7 @@ interface ISearchContext {
   filterByLiked: boolean;
   resetFilters: () => any;
   toggleSortByRating: () => any;
+  sortedByRating: sortDir | null;
 }
 
 const SearchContext = createContext<ISearchContext>({
@@ -32,7 +33,8 @@ const SearchContext = createContext<ISearchContext>({
   setFilterLiked: () => {},
   resetFilters: () => {},
   toggleSortByRating: () => {},
-  filterByLiked: false
+  filterByLiked: false,
+  sortedByRating: null
 
 });
 
@@ -71,7 +73,7 @@ export function SearchProvider({
       }
     });
   }
-
+ 
   function setarGenre(newGenre: string) {
     setSelectedGenre(newGenre === selectedGenre ? "" : newGenre);
   }
@@ -172,6 +174,7 @@ export function SearchProvider({
         resetFilters: restoreGameList,
         toggleSortByRating,
         filterByLiked,
+        sortedByRating
         
       }}
     >
@@ -180,7 +183,7 @@ export function SearchProvider({
   );
 }
 
-enum sortDir {
+export enum sortDir {
   "ASC" = "ASC",
   "DSC" = "DSC",
 }
