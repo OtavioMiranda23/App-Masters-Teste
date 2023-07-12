@@ -3,17 +3,9 @@ import styles from "./page.module.css";
 import { useFetch } from "@/hooks/useFetch";
 import { Card } from "@/components/card/card";
 import { IGames } from "@/types/games";
-import { Header } from "@/components/header/header";
-import { useEffect, useState } from "react";
-import { GenreMenu } from "@/components/genreMenu/genreMenu";
+import { useEffect } from "react";
 import Image from "next/image";
 import config from "../config/config";
-import {
-  filterByTitle,
-  filterByGenre,
-  sortAlphabetically,
-} from "@/utils/filter";
-import Head from "next/head";
 import useSearchContext from "@/hooks/useSearchContext";
 // import { createLike, getLikesByUser } from "@/context/RatingContext";
 
@@ -31,10 +23,10 @@ export default function Home() {
   } = useFetch<IGames[]>(config.url, config.axiosConfig);
 
   useEffect(() => {
-    if(games){
+    if (games) {
       setGames(games);
     }
-  },[games, setGames])
+  }, [games, setGames]);
 
   return (
     <main className={styles.main}>
@@ -50,7 +42,7 @@ export default function Home() {
         )}
       </div>
       <p className={styles.errorMensage}>{errorMensage}</p>
-      {/* <GenreMenu data={games} /> */}
+
 
       <section className={styles.section}>
         {errorMensage === null &&

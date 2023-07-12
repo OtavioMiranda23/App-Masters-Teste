@@ -1,3 +1,4 @@
+"use client";
 import { IGames } from "@/types/games";
 import styles from "./genreMenu.module.css";
 import useSearchContext from "@/hooks/useSearchContext";

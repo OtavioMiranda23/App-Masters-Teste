@@ -1,3 +1,4 @@
+"use client";
 import searchContext from "@/context/SearchContext";
 import { useContext } from "react";
 
