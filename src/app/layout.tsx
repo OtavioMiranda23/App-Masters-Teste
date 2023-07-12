@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { AuthProvider } from "@/context/AuthContext";
 import { SearchProvider } from "@/context/SearchContext";
 import { RatingProvider } from "@/context/RatingContext";
@@ -26,8 +25,6 @@ export default function RootLayout({
 }) {
   return (
     <>
-    
-    <html lang="en">
       <Head>
         <title>App Masters | Jogos</title>
       </Head>
@@ -36,14 +33,13 @@ export default function RootLayout({
           <SearchProvider>
             <body className={montserrat.className}>
               <>
-              <Header />
-              {children}
+                <Header />
+                {children}
               </>
             </body>
           </SearchProvider>
         </RatingProvider>
       </AuthProvider>
-    </html>
     </>
   );
 }
