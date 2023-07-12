@@ -3,11 +3,10 @@ import { AuthProvider } from "@/context/AuthContext";
 import { SearchProvider } from "@/context/SearchContext";
 import { RatingProvider } from "@/context/RatingContext";
 import "./globals.css";
-import { Inter, Montserrat } from "next/font/google";
+import {  Montserrat } from "next/font/google";
 import { Header } from "@/components/header/header";
 import Head from "next/head";
 
-const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
