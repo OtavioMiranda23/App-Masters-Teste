@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+   
       <html lang="en">
         <Head>
           <title>App Masters | Jogos</title>
@@ -33,15 +33,15 @@ export default function RootLayout({
           <RatingProvider>
             <SearchProvider>
               <body className={montserrat.className}>
-            
+                <>
                   <Header />
                   {children}
-           
+                </>
               </body>
             </SearchProvider>
           </RatingProvider>
         </AuthProvider>
       </html>
-    </>
+
   );
 }
