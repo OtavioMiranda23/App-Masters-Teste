@@ -17,6 +17,7 @@ interface ISearchContext {
   setSearch: (search: string) => any;
   setGenre: (genre: string) => any;
   setFilterLiked: () => any;
+  filterByLiked: boolean;
   resetFilters: () => any;
   toggleSortByRating: () => any;
 }
@@ -31,6 +32,8 @@ const SearchContext = createContext<ISearchContext>({
   setFilterLiked: () => {},
   resetFilters: () => {},
   toggleSortByRating: () => {},
+  filterByLiked: false
+
 });
 
 export function SearchProvider({
@@ -39,7 +42,7 @@ export function SearchProvider({
   children: JSX.Element | JSX.Element[];
 }) {
   const { user } = useAuth();
-  const { getRating , getRatedGames} = useRating();
+  const { getRating, getRatedGames } = useRating();
   const [games, setGames] = useState<IGames[]>([]);
   const [selectedData, setSelectedData] = useState<IGames[]>([]);
 
@@ -58,15 +61,15 @@ export function SearchProvider({
   }
 
   function toggleSortByRating() {
-    setSortedByRating(atual => {
-      if(atual === sortDir.DSC){
+    setSortedByRating((atual) => {
+      if (atual === sortDir.DSC) {
         return sortDir.ASC;
-      } else if(atual === sortDir.ASC){
+      } else if (atual === sortDir.ASC) {
         return null;
       } else {
         return sortDir.DSC;
       }
-    })
+    });
   }
 
   function setarGenre(newGenre: string) {
@@ -85,19 +88,20 @@ export function SearchProvider({
 
   const sortByRating = useCallback(
     (games: IGames[]) => {
-
       // De todos jogos, separar aqueles que tem uma avaliação
       let avaliados = getRatedGames(games);
 
-      if(!avaliados) return games;
+      if (!avaliados) return games;
 
       // Ordenar esses jogos por avaliação
       let ordenados = avaliados.sort((a, b) => {
         const matchA = getRating(a.id);
         const matchB = getRating(b.id);
 
-        if(!matchA || !matchB){
-          throw new Error("SearchContext$sortByRating recebeu um array de jogos não-avaliados (???)")
+        if (!matchA || !matchB) {
+          throw new Error(
+            "SearchContext$sortByRating recebeu um array de jogos não-avaliados (???)"
+          );
         }
 
         if (sortedByRating === sortDir.ASC) {
@@ -105,22 +109,20 @@ export function SearchProvider({
         } else {
           return matchB.rating - matchA.rating;
         }
-
       });
-      
+
       // concatenar os outros jogos sem avaliação no final da lista
-      let idsAvaliados = avaliados.map(g => g.id);
+      let idsAvaliados = avaliados.map((g) => g.id);
       let naoAvaliados = games.filter((g) => !idsAvaliados.includes(g.id));
 
       return [...ordenados, ...naoAvaliados];
-
     },
     [getRating, getRatedGames, sortedByRating]
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(sortedByRating);
-  }, [sortedByRating])
+  }, [sortedByRating]);
 
   // useEffect que lida com todos os filtros
   useEffect(() => {
@@ -169,6 +171,8 @@ export function SearchProvider({
         setGenre: setarGenre,
         resetFilters: restoreGameList,
         toggleSortByRating,
+        filterByLiked,
+        
       }}
     >
       {children}
@@ -178,7 +182,7 @@ export function SearchProvider({
 
 enum sortDir {
   "ASC" = "ASC",
-  "DSC" = "DSC"
+  "DSC" = "DSC",
 }
 
 export default SearchContext;

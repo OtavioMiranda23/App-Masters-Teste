@@ -4,10 +4,34 @@ import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
 import { useRating } from "@/context/RatingContext";
+import { IGames } from "@/types/games";
+import { useFetch } from "@/hooks/useFetch";
+import config from "@/config/config";
+import { useState } from "react";
 
 export function Header() {
   const { user, signOut } = useAuth();
-  const { setSearch, resetFilters, setFilterLiked, toggleSortByRating } = useSearchContext();
+  const [isLikeCheck, setIsLikeCheck] = useState();
+
+  const {
+    setSearch,
+    resetFilters,
+    setFilterLiked,
+    toggleSortByRating,
+    genre,
+    setGenre,
+    filterByLiked,
+  } = useSearchContext();
+
+  const {
+    data: games,
+    isFetching,
+    errorMensage,
+  } = useFetch<IGames[]>(config.url, config.axiosConfig);
+  const uniqueGenre = Array.from(
+    new Set(games?.map((game: IGames) => game.genre))
+  );
+  uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
 
   return (
     <header className={styles.header}>
@@ -16,17 +40,7 @@ export function Header() {
           <Image src="/logo.svg" height={100} width={250} alt="Logo" />
         </div>
       </Link>
-      <div
-        style={{
-          display: "flex",
-          padding: "1rem 2rem",
-          alignItems: "baseline",
-          justifyContent: "space-between",
-          color: "#fff",
-          gap: "5rem",
-          backgroundColor: "#333",
-        }}
-      >
+      <div className={styles.containerMenu}>
         <div
           style={{
             display: "flex",
@@ -40,32 +54,61 @@ export function Header() {
             className={styles.input}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <select name="" id="">
-            <option>[-- Selecionar Gênero --]</option>
-          </select>
+          <div className={styles.dropdown}>
+            <select
+              className={`${styles.dropdownSelect} ${styles.input}`}
+              onChange={(e) => setGenre(e.target.value)}
+            >
+              <option value="">Mostrar Todos</option>
+              {uniqueGenre.map((genre: string, index) => (
+                <option key={index} value={genre}>
+                  {genre}
+                </option>
+              ))}
+            </select>
+            <div className={styles.dropdownOptions}>
+              <option value="">Mostrar Todos</option>
+              {uniqueGenre.map((genre: string, index) => (
+                <option
+                  key={index}
+                  value={genre}
+                  className={styles.dropdownOption}
+                >
+                  {genre}
+                </option>
+              ))}
+            </div>
+          </div>
           {user && (
             <>
+            <p>Filtros:</p>
               <Image
                 // className={`${
                 //   r.liked ? styles.likeIconActive : styles.likeIconNotActive
                 // }`}
+                className={`${
+                  //mudar classe do icone like
+                  filterByLiked
+                    ? styles.likeIconActive
+                    : styles.likeIconNotActive
+                }`}
                 src="/like_red.svg"
                 onClick={setFilterLiked}
                 alt="like icon"
                 width={25}
                 height={25}
                 priority
+                title={filterByLiked ? 'Remover filtro de curtidos' : 'Filtrar por curtidos'}
               />
               <div
-              onClick={toggleSortByRating}
-              style={{
-                fontSize:"1.8rem",
-                color: "rgb(255, 166, 0)",
-                cursor: "pointer"
-              }}>
-                &#9733;
-                &#11014;
-                &#11015;
+                onClick={toggleSortByRating}
+                style={{
+                  fontSize: "1.8rem",
+                  color: "rgb(255, 166, 0)",
+                  cursor: "pointer",
+                }}
+              >
+                &#9733; &#11014; &#11015;
               </div>
             </>
           )}
