@@ -1,4 +1,5 @@
-"use client";
+
+"use client"
 import { AuthProvider } from "@/context/AuthContext";
 import { SearchProvider } from "@/context/SearchContext";
 import { RatingProvider } from "@/context/RatingContext";
@@ -33,7 +34,7 @@ export default function RootLayout({
           <SearchProvider>
             <body className={montserrat.className}>
               <>
-              <Header />
+     
               {children}
               </>
             </body>
