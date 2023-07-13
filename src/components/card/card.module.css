@@ -42,12 +42,12 @@
 }
 .likeIconActive {
     cursor: pointer;    
-    z-index: 10;
+    z-index: 11;
   }
   
   .likeIconNotActive {
     filter: grayscale(100%);
-    z-index: 10;
+    z-index: 11;
     cursor: pointer;   
   }
 
@@ -118,5 +118,5 @@
   }
 
   .stars {
-    z-index: 10;
+    z-index: 11;
   }
