@@ -1,0 +1,52 @@
+.menuContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropToggle {
+  display: none;
+}
+
+.menuBtn {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+
+.hamburger{
+
+
+}
+
+
+
+.menuDrop {
+  position: absolute;
+  display: flex;
+
+  top: 10%;
+  left: -22rem;
+  z-index: 1;
+  width: 20rem;
+  padding: 1rem;
+  background: transparent;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.openDrop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.item {
+  text-decoration: none;
+  list-style-type: none;
+}

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { sortDir } from "@/context/SearchContext";
 import { IGames } from "@/types/games";
 import HamburguerMenu from "../hamburguer/hamburguer";
+import { DropMenu } from "../dropMenu/dropMenu";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -80,7 +81,7 @@ export function Header() {
               className={`${styles.dropdownSelect} ${styles.input}`}
               onChange={(e) => setGenre(e.target.value)}
             >
-              <option value="">Mostrar Todos</option>
+              <option value="">Mostrar todos gêneros</option>
               {uniqueGenre.map((genre: string, index) => (
                 <option key={index} value={genre}>
                   {genre}
@@ -88,7 +89,7 @@ export function Header() {
               ))}
             </select>
             <div className={styles.dropdownOptions}>
-              <option value="">Mostrar Todos</option>
+              <option value="">Mostrar todos gêneros</option>
               {uniqueGenre.map((genre: string, index) => (
                 <option
                 key={index}
@@ -154,14 +155,17 @@ export function Header() {
           }}
           >
           {user ? (
-
-
-         <div>
+ 
+            
+            
+           <DropMenu >
+            <div>
               <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
               <a className={styles.entrar} onClick={() => signOut()} href="#">
                 Sair
               </a>
             </div>
+           </DropMenu >
           ) : (
             <>
               <p>Bem vindo, visitante!</p>
