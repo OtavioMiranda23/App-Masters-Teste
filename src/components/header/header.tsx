@@ -5,12 +5,14 @@ import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { sortDir } from "@/context/SearchContext";
 import { IGames } from "@/types/games";
+import HamburguerMenu from "../hamburguer/hamburguer";
 
 export function Header() {
   const { user, signOut } = useAuth();
+  const [userMenu, setUserMenu] = useState(false);
   const [isLikeCheck, setIsLikeCheck] = useState();
 
   const {
@@ -22,15 +24,14 @@ export function Header() {
     setGenre,
     filterByLiked,
     sortedByRating,
-    games
-    
+    games,
   } = useSearchContext();
 
-    const uniqueGenre = Array.from(
-      new Set(games?.map((game: IGames) => game.genre))
-    );
-    uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
-  
+  const uniqueGenre = Array.from(
+    new Set(games?.map((game: IGames) => game.genre))
+  );
+  uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
+
   function verifySortByRatingRender(sortedByRating: sortDir | null) {
     if (sortedByRating === null) {
       return (
@@ -40,7 +41,7 @@ export function Header() {
         </div>
       );
     }
-    if (sortedByRating == sortDir.DSC) {
+    if (sortedByRating === sortDir.DSC) {
       return (
         <div>
           <span>&#9733;</span>
@@ -73,12 +74,7 @@ export function Header() {
             alignItems: "center",
           }}
         >
-          <input
-            type="text"
-            placeholder="Busque um título..."
-            className={styles.input}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <HamburguerMenu />
           <div className={styles.dropdown}>
             <select
               className={`${styles.dropdownSelect} ${styles.input}`}
@@ -95,17 +91,23 @@ export function Header() {
               <option value="">Mostrar Todos</option>
               {uniqueGenre.map((genre: string, index) => (
                 <option
-                  key={index}
-                  value={genre}
-                  className={styles.dropdownOption}
+                key={index}
+                value={genre}
+                className={styles.dropdownOption}
                 >
                   {genre}
                 </option>
               ))}
             </div>
           </div>
+          <input
+            type="text"
+            placeholder="Busque um título..."
+            className={styles.input}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           {user && (
-            <>
+            <div className={styles.filters}>
               <p>Filtros:</p>
               <Image
                 // className={`${
@@ -141,7 +143,7 @@ export function Header() {
 
                 {/* &#9733; &#11014; &#11015;  */}
               </div>
-            </>
+            </div>
           )}
         </div>
         <div
@@ -150,14 +152,16 @@ export function Header() {
             alignItems: "center",
             gap: "1.5rem",
           }}
-        >
+          >
           {user ? (
-            <>
-              <p>Bem vindo, {user.email}!</p>
+
+
+         <div>
+              <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
               <a className={styles.entrar} onClick={() => signOut()} href="#">
                 Sair
               </a>
-            </>
+            </div>
           ) : (
             <>
               <p>Bem vindo, visitante!</p>

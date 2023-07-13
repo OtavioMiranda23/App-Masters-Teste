@@ -45,65 +45,97 @@ export function Card({ data }: ICard) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ ease: "easeInOut", duration: 0.3 }}
-      className={styles.container}
-    >
-      <div className={styles.containerCard}>
-        <div className={styles.containerTop}>
-          
+    <div className={styles.card}>
+    <div className={styles.imageOverlay}></div>
+
+      <img
+        src="/heart.svg"
+        alt="heart"
+        width={20}
+        height={20}
+        className={r.liked ? styles.likeIconActive : styles.likeIconNotActive}
+        onClick={setLiked}
+      />
 
 
-          <Image
-            src={data.thumbnail}
-            alt={`${data.title} image game`}
-            width={365}
-            height={206}
-            layout="responsive"
-            priority
-            className={styles.image}
-            />
-        </div>
-        <div className={styles.containerCenter}>
-          <h2 className={styles.cardTitle}>{data.title}</h2>
-          <div
-            className={styles.containerGenre}
-            onClick={() => {
-              setGenre(data.genre), setSearch("");
-            }}
-          >
-            {/* <div
-            className={styles.marker}
-            onClick={() => {
-              setGenre(data.genre), setSearch("");
-            }}
-          >
-            
-          </div> */}
-            <p className={styles.genre}>{data.genre}</p>
-            <p>{data.platform}</p>
-            <p>{data.release_date?.substring(0,4)}</p>
-          </div>
-        </div>
-
-        <div className={styles.containerBottom}>
-          <Image
-            onClick={setLiked}
-            className={`${
-              r.liked ? styles.likeIconActive : styles.likeIconNotActive
-            }`}
-            src="/like_red.svg"
-            alt="like icon"
-            width={25}
-            height={25}
-            priority
-          />
-          <StarsRating rating={r.rating} onSetRating={setStars} />
-          <a target="_blank" href={data.game_url }>Acesse</a>
-        </div>
+    <img
+      src={data.thumbnail}
+      alt={`${data.title} image game`}
+      className={styles.image}
+    />
+    <div className={styles.cardContent}>
+      <StarsRating rating={r.rating} onSetRating={setStars} />
+      <div className={styles.containerBottom}>
+        <a target="_blank" href={data.game_url}>
+          Acesse
+        </a>
       </div>
-    </motion.div>
-  );
+      <h2>{data.title}</h2>
+      <p>{data.genre}</p>
+      <a href="#" className={styles.button}>
+        Acesse
+      </a>
+    </div>
+  </div>
+);
 }
+
+// <motion.div
+//   initial={{ opacity: 0, y: 15 }}
+//   animate={{ opacity: 1, y: 0 }}
+//   transition={{ ease: "easeInOut", duration: 0.3 }}
+//   className={styles.container}
+// >
+//   <div className={styles.containerCard}>
+//     <div className={styles.containerTop}>
+
+//       <Image
+//         src={data.thumbnail}
+//         alt={`${data.title} image game`}
+//         width={365}
+//         height={206}
+//         layout="responsive"
+//         priority
+//         className={styles.image}
+//         />
+//     </div>
+//     <h1 className={styles.over}>Nome Jogo</h1>
+//     <div className={styles.containerCenter}>
+//       <h2 className={styles.cardTitle}>{data.title}</h2>
+//       <div
+//         className={styles.containerGenre}
+//         onClick={() => {
+//           setGenre(data.genre), setSearch("");
+//         }}
+//       >
+//         {/* <div
+//         className={styles.marker}
+//         onClick={() => {
+//           setGenre(data.genre), setSearch("");
+//         }}
+//       >
+
+//       </div> */}
+//         <p className={styles.genre}>{data.genre}</p>
+//         <p>{data.platform}</p>
+//         <p>{data.release_date?.substring(0,4)}</p>
+//       </div>
+//     </div>
+
+//     <div className={styles.containerBottom}>
+//       <Image
+//         onClick={setLiked}
+//         className={`${
+//           r.liked ? styles.likeIconActive : styles.likeIconNotActive
+//         }`}
+//         src="/like_red.svg"
+//         alt="like icon"
+//         width={25}
+//         height={25}
+//         priority
+//       />
+//       <StarsRating rating={r.rating} onSetRating={setStars} />
+//       <a target="_blank" href={data.game_url }>Acesse</a>
+//     </div>
+//   </div>
+// </motion.div>
