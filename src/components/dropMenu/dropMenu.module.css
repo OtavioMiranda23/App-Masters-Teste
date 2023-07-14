@@ -22,7 +22,7 @@
 .menuDrop {
   position: absolute;
   display: flex;
-  background: black;
+
   overflow: visible;
   top: 35px;
   right: 0;
@@ -39,7 +39,7 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  background: black;
+
 }
 .item {
   overflow: hidden;

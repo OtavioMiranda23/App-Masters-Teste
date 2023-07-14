@@ -21,7 +21,7 @@ const HamburguerMenu = () => {
     sortedByRating,
     games,
   } = useSearchContext();
-  const {verifySortByRatingRender} = useRating();
+  const { verifySortByRatingRender } = useRating();
 
   const uniqueGenre = Array.from(
     new Set(games?.map((game: IGames) => game.genre))
@@ -84,37 +84,20 @@ const HamburguerMenu = () => {
           </div>
         </li>
         <li className={styles.li}>
-        <div
-                onClick={toggleSortByRating}
-                style={{
-                  fontSize: "1.8rem",
-                  color: "rgb(255, 166, 0)",
-                  cursor: "pointer",
-                }}
-              >
-                {verifySortByRatingRender(sortedByRating)}
+          <div
+            onClick={toggleSortByRating}
+            style={{
+              fontSize: "1.8rem",
+              color: "rgb(255, 166, 0)",
+              cursor: "pointer",
+            }}
+          >
+            {verifySortByRatingRender(sortedByRating)}
 
-                {/* &#9733; &#11014; &#11015;  */}
-              </div>
-            
+            {/* &#9733; &#11014; &#11015;  */}
+          </div>
         </li>
-        <li>
-          {user ? (
-            <div>
-              <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
-              <a className={styles.entrar} onClick={() => signOut()} href="#">
-                Sair
-              </a>
-            </div>
-          ) : (
-            <>
-              <p>Bem vindo, visitante!</p>
-              <Link href="/auth" className={styles.entrar}>
-                Entrar
-              </Link>
-            </>
-          )}
-        </li>
+    
       </ul>
     </div>
   );

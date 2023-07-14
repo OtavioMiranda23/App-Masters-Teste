@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Alert.module.css";
+import styles from "./alert.module.css";
 
 type AlertProps = {
   type: "success" | "error" | "warning";

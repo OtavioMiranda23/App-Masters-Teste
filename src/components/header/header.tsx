@@ -82,7 +82,7 @@ export function Header() {
           />
           {user && (
             <div className={styles.filters}>
-              <p>Filtros:</p>
+              <p >Filtros</p>
               <Image
                 // className={`${
                 //   r.liked ? styles.likeIconActive : styles.likeIconNotActive
@@ -127,23 +127,7 @@ export function Header() {
             gap: "1.5rem",
           }}
         >
-          {user ? (
-            <DropMenu>
-              <div>
-                <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
-                <a className={styles.entrar} onClick={() => signOut()} href="#">
-                  Sair
-                </a>
-              </div>
-            </DropMenu>
-          ) : (
-            <>
-              <p>Bem vindo, visitante!</p>
-              <Link href="/auth" className={styles.entrar}>
-                Entrar
-              </Link>
-            </>
-          )}
+         
         </div>
       </div>
     </header>

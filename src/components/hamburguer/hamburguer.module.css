@@ -19,6 +19,17 @@
     .menuBtn {
         display: none;
     }
+      .open {
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+    }
+      .menu {
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+    }
+    
   }
   
   .hamburger{
@@ -36,16 +47,19 @@
   
   .menu {
     position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     top: 100%;
     left: 0;
     z-index: 1;
-    width: 200px;
-    padding: 10px;
+
+    padding: 1rem;
     background: var(--background-color-white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-100%);
+    transform: translatey(-100%);
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
   
@@ -54,6 +68,7 @@
     visibility: visible;
     transform: translateX(0);
   }
+  
   .li {
     text-decoration: none;
     list-style: none;

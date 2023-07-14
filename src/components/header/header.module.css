@@ -34,17 +34,6 @@
     cursor: pointer;
 }
 
-.entrar {
-    padding: .25rem 1rem;
-    color: rgb(230, 230, 230);;
-
-}
-.entrar:hover{
-    cursor: pointer; 
-    
-    border: 1px solid white;
-    color: white;
-}
 
 .containerMenu {
   display: flex;
@@ -60,11 +49,20 @@
     cursor: pointer;
   }
   
+.filters {
+  color: #fff;
+  border-left: 1px solid #255fff99;
+  padding-left: 1rem;
+}
+@media (min-width: 1024px){
 
-/* dropdown animation */
-.dropdown {
-
+  .filters{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
+}
+
   @media (max-width: 767px){
 
     .dropdown {
@@ -120,9 +118,3 @@
   }
 
   
-  .bemVindo {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-grow: 1;
-    margin-right: 1rem;  }

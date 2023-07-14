@@ -8,6 +8,7 @@ import Image from "next/image";
 import config from "../config/config";
 import useSearchContext from "@/hooks/useSearchContext";
 import Alert from "@/components/alerts/alert";
+import { UserMenu } from "@/components/userMenu/userMenu";
 // import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
@@ -27,23 +28,26 @@ export default function Home() {
     setGames(games || []);
   }, [games, setGames]);
 
-
   return (
     <main className={styles.main}>
-      <Alert  type="success" message="Sucesso! Usuário criado!"/>
+      <Alert type="success" message="Sucesso! Usuário criado!" />
       <div>
         {isFetching && (
-          <Image
-            src="/loader.svg"
-            alt="Loading icon"
-            height={100}
-            width={100}
-            className={styles.loader}
-          />
+     
+
+            <Image
+              src="/loader.svg"
+              alt="Loading icon"
+              height={100}
+              width={100}
+              className={styles.loader}
+            />
+        
         )}
       </div>
       <p className={styles.errorMensage}>{errorMensage}</p>
 
+      {errorMensage === null && <UserMenu />}
       <section className={styles.section}>
         {errorMensage === null &&
           selectedData?.map((game: IGames) => {
