@@ -18,6 +18,7 @@ import Rating from "@/types/rating";
 import { createContext, useState, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { IGames } from "@/types/games";
+import { sortDir } from "./SearchContext";
 
 const db = collection(store, "likes");
 
@@ -27,6 +28,7 @@ interface IRatingContext {
   handleRating: (gameId: number, rating: number) => void;
   getRating: (gameId: number) => Rating | undefined;
   getRatedGames: (games: IGames[]) => IGames[] | undefined;
+  verifySortByRatingRender: (sort: sortDir | null) => React.ReactNode;
 }
 
 interface IRatingProviderProps {
@@ -39,6 +41,7 @@ const RatingContext = createContext<IRatingContext>({
   handleRating: () => {},
   getRating: () => undefined,
   getRatedGames: () => undefined,
+  verifySortByRatingRender: () => <></>
 });
 
 export function RatingProvider({ children }: IRatingProviderProps) {
@@ -122,7 +125,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
     const rating = getRating(gameId);
 
     if (rating) {
-      // @ts-ignore
+  
       const docRef = doc(db, rating.ratingId);
       return await setDoc(docRef, { rating: finalRating }, { merge: true });
     }
@@ -139,7 +142,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
   // uma vez que foi avaliado, só faz sentido mudar a avaliação do jogo.
 
   const getById = (userId: string) => query(db, where("userId", "==", userId));
-
+  
   function mapToRatings(
     docs: QueryDocumentSnapshot<DocumentData, DocumentData>[]
   ) {
@@ -154,6 +157,20 @@ export function RatingProvider({ children }: IRatingProviderProps) {
       };
     });
   }
+
+  // Essa função renderiza o símbolo de rating na ordem correta
+  function verifySortByRatingRender(sort: sortDir | null): React.ReactNode {
+    return (
+      <div style={ sort === null ? {color: "gray"}: {}}>
+        <span>&#9733;</span>
+        {sort === sortDir.DSC ? (
+          <span>&#11015;</span>
+        ) : (
+          <span>&#11014;</span>
+        )}
+      </div>
+    );
+  }
   return (
     <RatingContext.Provider
       value={{
@@ -162,6 +179,7 @@ export function RatingProvider({ children }: IRatingProviderProps) {
         getRating,
         handleRating,
         getRatedGames,
+        verifySortByRatingRender
       }}
     >
       {children}

@@ -10,10 +10,10 @@ import { sortDir } from "@/context/SearchContext";
 import { IGames } from "@/types/games";
 import HamburguerMenu from "../hamburguer/hamburguer";
 import { DropMenu } from "../dropMenu/dropMenu";
+import { useRating } from "@/context/RatingContext";
 
 export function Header() {
   const { user, signOut } = useAuth();
-
 
   const {
     setSearch,
@@ -32,33 +32,7 @@ export function Header() {
   );
   uniqueGenre.sort((a, b) => (a > b ? 1 : -1));
 
-  function verifySortByRatingRender(sortedByRating: sortDir | null) {
-    if (sortedByRating === null) {
-      return (
-        <div>
-          <span>&#9733;</span>
-          <span>&#11015;</span>
-        </div>
-      );
-    }
-    if (sortedByRating === sortDir.DSC) {
-      return (
-        <div>
-          <span>&#9733;</span>
-          <span>&#11015;</span>
-        </div>
-      );
-    }
-    if (sortedByRating === sortDir.ASC) {
-      return (
-        <div>
-          <span>&#9733;</span>
-          <span className={styles.arrowDown}>&#11014;</span>
-        </div>
-      );
-    }
-  }
-
+  const { verifySortByRatingRender } = useRating();
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -91,9 +65,9 @@ export function Header() {
               <option value="">Mostrar todos gêneros</option>
               {uniqueGenre.map((genre: string, index) => (
                 <option
-                key={index}
-                value={genre}
-                className={styles.dropdownOption}
+                  key={index}
+                  value={genre}
+                  className={styles.dropdownOption}
                 >
                   {genre}
                 </option>
@@ -152,19 +126,16 @@ export function Header() {
             alignItems: "center",
             gap: "1.5rem",
           }}
-          >
+        >
           {user ? (
- 
-            
-            
-           <DropMenu >
-            <div>
-              <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
-              <a className={styles.entrar} onClick={() => signOut()} href="#">
-                Sair
-              </a>
-            </div>
-           </DropMenu >
+            <DropMenu>
+              <div>
+                <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
+                <a className={styles.entrar} onClick={() => signOut()} href="#">
+                  Sair
+                </a>
+              </div>
+            </DropMenu>
           ) : (
             <>
               <p>Bem vindo, visitante!</p>

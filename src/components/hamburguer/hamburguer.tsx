@@ -3,8 +3,12 @@ import styles from "./hamburguer.module.css";
 import Image from "next/image";
 import useSearchContext from "@/hooks/useSearchContext";
 import { IGames } from "@/types/games";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import { useRating } from "@/context/RatingContext";
 
 const HamburguerMenu = () => {
+  const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const {
     setSearch,
@@ -17,6 +21,8 @@ const HamburguerMenu = () => {
     sortedByRating,
     games,
   } = useSearchContext();
+  const {verifySortByRatingRender} = useRating();
+
   const uniqueGenre = Array.from(
     new Set(games?.map((game: IGames) => game.genre))
   );
@@ -40,7 +46,7 @@ const HamburguerMenu = () => {
         <span className={styles.hamburger}></span>
       </label>
       <ul className={`${styles.menu} ${menuOpen ? styles.open : ""}`}>
-        <li>
+        <li className={styles.li}>
           <select
             className={`${styles.dropdownSelect} ${styles.input}`}
             onChange={(e) => setGenre(e.target.value)}
@@ -53,7 +59,7 @@ const HamburguerMenu = () => {
             ))}
           </select>
         </li>
-        <li>
+        <li className={styles.li}>
           <div className={styles.filterOptions}>
             <Image
               // className={`${
@@ -77,18 +83,37 @@ const HamburguerMenu = () => {
             />
           </div>
         </li>
+        <li className={styles.li}>
+        <div
+                onClick={toggleSortByRating}
+                style={{
+                  fontSize: "1.8rem",
+                  color: "rgb(255, 166, 0)",
+                  cursor: "pointer",
+                }}
+              >
+                {verifySortByRatingRender(sortedByRating)}
+
+                {/* &#9733; &#11014; &#11015;  */}
+              </div>
+            
+        </li>
         <li>
-          <div className={styles.sortOptions}>
-            <label htmlFor="sortRating" className={styles.sortOption}>
-              <input
-                type="checkbox"
-                id="sortRating"
-                checked={sortedByRating !== null}
-                onChange={toggleSortByRating}
-              />
-              Classificar por avaliação
-            </label>
-          </div>
+          {user ? (
+            <div>
+              <p className={styles.bemVindo}>Bem vindo, {user.email}!</p>
+              <a className={styles.entrar} onClick={() => signOut()} href="#">
+                Sair
+              </a>
+            </div>
+          ) : (
+            <>
+              <p>Bem vindo, visitante!</p>
+              <Link href="/auth" className={styles.entrar}>
+                Entrar
+              </Link>
+            </>
+          )}
         </li>
       </ul>
     </div>

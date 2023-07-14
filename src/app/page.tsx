@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import config from "../config/config";
 import useSearchContext from "@/hooks/useSearchContext";
+import Alert from "@/components/alerts/alert";
 // import { createLike, getLikesByUser } from "@/context/RatingContext";
 
 export default function Home() {
@@ -29,6 +30,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <Alert  type="success" message="Sucesso! Usuário criado!"/>
       <div>
         {isFetching && (
           <Image
