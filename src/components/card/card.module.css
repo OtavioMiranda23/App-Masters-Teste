@@ -54,16 +54,56 @@
     
     
 }
+@keyframes pulse {
+  0% {
+    transform: scale(.1);
+  }
+  25% {
+    transform: scale(.1);
+    transform: translateY(-10%);
+  }
+  50% {
+    transform: scale(1.4);
+    transform: translateY(-20%);
+  }
+  75% {
+    transform: scale(1.4);
+    transform: translateY(-20%);    
+  }
+  90% {
+    transform: scale(1.2);
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes desaturation {
+  0% {
+    filter: grayscale(0%) ;
+  }
+  50% {
+    filter: grayscale(50%);
+    transform: scale(1.2);
+  }
+  100% {
+    filter: grayscale(100%);
+  }
+}
 .likeIconActive {
     cursor: pointer;    
     z-index: 11;
+    animation: pulse .3s linear;
   }
   
-  .likeIconNotActive {
-    filter: grayscale(100%);
-    z-index: 11;
-    cursor: pointer;   
-  }
+.likeIconNotActive {
+  filter: grayscale(100%);
+  z-index: 11;
+  cursor: pointer;   
+  animation: pulse .3s linear;
+  animation: desaturation .2s linear;
+
+}
 
   .imageOverlay2 {
     border-radius: 1rem;

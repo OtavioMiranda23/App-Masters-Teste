@@ -69,18 +69,13 @@ export function Card({ data }: ICard) {
           priority
         />
         <div className={styles.stars}>
-        <StarsRating rating={r.rating} onSetRating={setStars} />
-
+          <StarsRating rating={r.rating} onSetRating={setStars} />
         </div>
 
         <div className={styles.imageOverlay2}></div>
 
-  
-
- 
         <h2 className={styles.title}>{data.title}</h2>
         <div className={styles.infos}>
-
           <p className={styles.genre}>{data.genre}</p>
           <p>{data.release_date?.substring(0, 4)}</p>
           <a className={styles.link} target="_blank" href={data.game_url}>
