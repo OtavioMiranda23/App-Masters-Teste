@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <Alert type="success" message="Sucesso! Usuário criado!" />
+
       <div>
         {isFetching && (
      
