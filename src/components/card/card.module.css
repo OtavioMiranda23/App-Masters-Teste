@@ -9,7 +9,7 @@
   }
   .card:hover {
 
-    box-shadow: 0px 0px 22px rgba(56, 136, 252, 0.8);
+    box-shadow: 0px 0px 40px rgb(56, 134, 252);
     /* transform: translateY(-10px); */
     transition: 250ms;
   }
@@ -43,6 +43,7 @@
 
 .ratingContainer {
     display: flex;
+    padding-bottom: 4px;
     position: absolute;
     top: 0;
     left: 0;
@@ -100,8 +101,8 @@
   filter: grayscale(100%);
   z-index: 11;
   cursor: pointer;   
-  animation: pulse .3s linear;
-  animation: desaturation .2s linear;
+
+  animation: desaturation .2s ease-in;
 
 }
 
@@ -149,7 +150,7 @@
     justify-content: space-evenly;
     align-items: center;    
     position: absolute;
-    top: 20%;
+    top: 15%;
     left: 0;
     width: 100%;
     height: 100%; 
@@ -161,6 +162,15 @@
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
+  @media (max-width: 768px){
+    .infos {
+      top: 10%;
+    }
+    .title {
+      top: -5%;
+    }
+
+  }
   .card:hover .infos {
     opacity: 1;
     transform: translateY(0);
@@ -169,8 +179,14 @@
   .link{
     text-decoration: none;
     color: #fff;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
   }
 
   .stars {
     z-index: 11;
+  }
+  .genre {
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
   }

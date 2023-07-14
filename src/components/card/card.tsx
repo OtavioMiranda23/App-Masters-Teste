@@ -76,7 +76,9 @@ export function Card({ data }: ICard) {
 
         <h2 className={styles.title}>{data.title}</h2>
         <div className={styles.infos}>
-          <p className={styles.genre}>{data.genre}</p>
+          <p className={styles.genre} onClick={() => {
+          setGenre(data.genre), setSearch("")}}
+          >{data.genre}</p>
           <p>{data.release_date?.substring(0, 4)}</p>
           <a className={styles.link} target="_blank" href={data.game_url}>
             Acesse
