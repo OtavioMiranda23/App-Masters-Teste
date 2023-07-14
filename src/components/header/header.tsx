@@ -13,8 +13,7 @@ import { DropMenu } from "../dropMenu/dropMenu";
 
 export function Header() {
   const { user, signOut } = useAuth();
-  const [userMenu, setUserMenu] = useState(false);
-  const [isLikeCheck, setIsLikeCheck] = useState();
+
 
   const {
     setSearch,
