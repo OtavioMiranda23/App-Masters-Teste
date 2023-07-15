@@ -6,8 +6,11 @@ import {
   createUserWithEmailAndPassword,
   User,
   onAuthStateChanged,
+  AuthErrorCodes,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import Alert from "@/components/alerts/alert";
+import { FirebaseError } from "firebase/app";
 
 interface IAuthContext {
   user: User | null;
@@ -15,6 +18,8 @@ interface IAuthContext {
   signUp: (email: string, password: string) => void;
   signIn: (email: string, password: string) => void;
   signOut: () => void;
+  errorMessageAuth: string;
+  resetAlert: () => void;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -25,12 +30,20 @@ interface IAuthProviderProps {
 export function AuthProvider({ children }: IAuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessageAuth, setErrorMessageAuth] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const router = useRouter();
 
   function handleUser(user: User | null) {
     setUser(user);
   }
+  const resetAlert = () => {
+    setShowAlert(false);
+    setErrorMessageAuth("");
+  };
+  
 
   async function signUp(email: string, password: string) {
     try {
@@ -41,7 +54,7 @@ export function AuthProvider({ children }: IAuthProviderProps) {
       setUser(res.user);
     } catch (e) {
       console.error("Erro ao logar usuário!", e);
-      alert("Erro ao cadastrar usuário")
+      //alert("Erro ao cadastrar usuário");
     } finally {
       setIsLoading(false);
     }
@@ -50,12 +63,34 @@ export function AuthProvider({ children }: IAuthProviderProps) {
   async function signIn(email: string, password: string) {
     try {
       setIsLoading(true);
+      resetAlert();
       const res = await signInWithEmailAndPassword(auth, email, password);
       setUser(res.user);
       router.push("/");
-    } catch (e) {
-      console.error("Erro ao logar usuário!");
-      alert("Erro ao logar usuário")
+      alert("Usuário logado com sucesso");
+    } catch (error) {
+      setShowAlert(true);
+      if (error instanceof FirebaseError) {
+        if (error.message.includes("auth/user-not-found")) {
+          console.error(error.message);
+          
+          setErrorMessageAuth("Email ou senha incorretos.");
+          return <Alert type="error" message={errorMessageAuth}/>
+
+        }
+
+        console.error(
+          "Erro ao logar usuário!",
+          error.name,
+          error.code,
+          error.message
+          
+        );
+        setShowAlert(true);
+        return setErrorMessageAuth(error.message);
+      }
+      setShowAlert(true);
+      setErrorMessageAuth("Ocorreu algo errado");
     } finally {
       setIsLoading(false);
     }
@@ -86,8 +121,11 @@ export function AuthProvider({ children }: IAuthProviderProps) {
         signIn,
         signOut,
         signUp,
+        errorMessageAuth,
+        resetAlert
       }}
     >
+      {showAlert && <Alert type="error" message={errorMessageAuth} />}
       {children}
     </AuthContext.Provider>
   );

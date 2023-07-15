@@ -31,6 +31,7 @@ export default function AuthPanel({
 }: IAuthPanel) {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
+  
   function validateEmail(email: string) {
     let error = "";
     const expression = /^[^@]+@\w+(\.\w+)+\w$/;

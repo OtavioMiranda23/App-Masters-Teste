@@ -11,7 +11,7 @@ type AlertProps = {
 const Alert: React.FC<AlertProps> = ({
   type,
   message,
-  duration = 1000,
+  duration = 5000,
   onClose,
 }) => {
   const [closed, setClosed] = useState(false);

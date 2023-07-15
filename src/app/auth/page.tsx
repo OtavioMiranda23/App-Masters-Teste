@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Header } from "@/components/header/header";
 import AuthPanel from "@/components/authPanel/authPanel";
+import Alert from "@/components/alerts/alert";
 
 export default function FormLogin() {
-  const { user, signUp, signIn } = useAuth();
+  const { user, signUp, signIn, errorMessageAuth, resetAlert } = useAuth();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

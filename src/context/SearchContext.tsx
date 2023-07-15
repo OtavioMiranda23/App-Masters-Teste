@@ -8,6 +8,7 @@ import {
 import { createContext, useState, useEffect, useCallback } from "react";
 import { useAuth } from "./AuthContext";
 import { useRating } from "./RatingContext";
+import Fuse from "fuse.js";
 
 interface ISearchContext {
   search: string;
@@ -55,8 +56,19 @@ export function SearchProvider({
   const [selectedGenre, setSelectedGenre] = useState("");
   const [filterByLiked, setFilterByLiked] = useState(false);
   const [sortedByRating, setSortedByRating] = useState<sortDir | null>(null);
+//   const [advancedSearchResults, setAdvancedSearchResults] = useState<IGames[]>([]);
 
- 
+//  const advancedSearch = (searchTerm: string) => {
+//     const fuseOptions = { 
+//       keys: ['title']
+//     }
+//     const fuse = new Fuse(games, fuseOptions);
+//     const result = fuse.search(searchTerm);
+//     const selectedData = result.map((item) => item.item);
+
+//     setAdvancedSearchResults(selectedData);
+
+//  }
   
   function restoreGameList() {
     setSelectedGenre("");
