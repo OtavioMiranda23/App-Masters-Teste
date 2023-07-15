@@ -45,7 +45,9 @@ export function Card({ data }: ICard) {
   }
 
   return (
+    
     <div className={styles.card}>
+
       <Image
         src={data.thumbnail}
         alt={`${data.title} image game`}
@@ -68,6 +70,7 @@ export function Card({ data }: ICard) {
           height={50}
           priority
         />
+ 
         <div className={styles.stars}>
           <StarsRating rating={r.rating} onSetRating={setStars} />
         </div>
@@ -84,6 +87,7 @@ export function Card({ data }: ICard) {
             Acesse
           </a>
         </div>
+
       </div>
       {/* <div className={styles.cardContent}>
         <div className={styles.containerBottom}>
