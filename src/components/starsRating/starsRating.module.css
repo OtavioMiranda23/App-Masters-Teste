@@ -6,10 +6,13 @@
     font-size: 3rem;
     color: #ccc;
     cursor: pointer;
+    transition: transform 0.3s ease;
+
   }
   
   .star.hover{
     color: rgb(255, 211, 129);
+    transform: rotate(360deg);
 
   }
   .star.active {

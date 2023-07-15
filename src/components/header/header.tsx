@@ -13,14 +13,12 @@ import { DropMenu } from "../dropMenu/dropMenu";
 import { useRating } from "@/context/RatingContext";
 
 export function Header() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   const {
     setSearch,
-    resetFilters,
     setFilterLiked,
     toggleSortByRating,
-    genre,
     setGenre,
     filterByLiked,
     sortedByRating,
@@ -41,13 +39,7 @@ export function Header() {
         </div>
       </Link>
       <div className={styles.containerMenu}>
-        <div
-          style={{
-            display: "flex",
-            gap: "1.5rem",
-            alignItems: "center",
-          }}
-        >
+        <div className={styles.containerSearchGenreMenu} style={{}}>
           <HamburguerMenu />
           <div className={styles.dropdown}>
             <select
@@ -82,13 +74,9 @@ export function Header() {
           />
           {user && (
             <div className={styles.filters}>
-              <p >Filtros</p>
+              <p>Filtros</p>
               <Image
-                // className={`${
-                //   r.liked ? styles.likeIconActive : styles.likeIconNotActive
-                // }`}
                 className={`${
-                  //mudar classe do icone like
                   filterByLiked
                     ? styles.likeIconActive
                     : styles.likeIconNotActive
@@ -105,29 +93,13 @@ export function Header() {
                     : "Filtrar por curtidos"
                 }
               />
-              <div
-                onClick={toggleSortByRating}
-                style={{
-                  fontSize: "1.8rem",
-                  color: "rgb(255, 166, 0)",
-                  cursor: "pointer",
-                }}
-              >
+              <div className={styles.sortByRating} onClick={toggleSortByRating}>
                 {verifySortByRatingRender(sortedByRating)}
 
                 {/* &#9733; &#11014; &#11015;  */}
               </div>
             </div>
           )}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1.5rem",
-          }}
-        >
-         
         </div>
       </div>
     </header>

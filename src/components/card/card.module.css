@@ -184,8 +184,10 @@
   }
 
   .stars {
+
     z-index: 11;
   }
+
   .genre {
     cursor: pointer;
     border-bottom: 1px solid #fff;
