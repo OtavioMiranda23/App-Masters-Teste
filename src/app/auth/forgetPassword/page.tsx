@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { useState, FormEvent } from "react";
 
-export function ForgetPassword() {
+export default function ForgetPassword() {
     const { user, signUp, updatePassword, errorMessageAuth, resetAlert } = useAuth();
     const [email, setEmail] = useState<string>("");
   
@@ -32,4 +32,3 @@ export function ForgetPassword() {
         />
     )
 }
-export default ForgetPassword;

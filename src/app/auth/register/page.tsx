@@ -2,8 +2,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
-import styles from "./page.module.css";
-import { Header } from "@/components/header/header";
 import AuthPanel from "@/components/authPanel/authPanel";
 
 export default function Register() {
