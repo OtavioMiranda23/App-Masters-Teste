@@ -7,6 +7,7 @@ import {
   User,
   onAuthStateChanged,
   AuthErrorCodes,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Alert from "@/components/alerts/alert";
@@ -20,6 +21,7 @@ interface IAuthContext {
   signOut: () => void;
   errorMessageAuth: string;
   resetAlert: () => void;
+  updatePassword: (email: string) => void;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -33,7 +35,6 @@ export function AuthProvider({ children }: IAuthProviderProps) {
   const [errorMessageAuth, setErrorMessageAuth] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
-
   const router = useRouter();
 
   function handleUser(user: User | null) {
@@ -43,7 +44,6 @@ export function AuthProvider({ children }: IAuthProviderProps) {
     setShowAlert(false);
     setErrorMessageAuth("");
   };
-  
 
   async function signUp(email: string, password: string) {
     try {
@@ -73,10 +73,9 @@ export function AuthProvider({ children }: IAuthProviderProps) {
       if (error instanceof FirebaseError) {
         if (error.message.includes("auth/user-not-found")) {
           console.error(error.message);
-          
-          setErrorMessageAuth("Email ou senha incorretos.");
-          return <Alert type="error" message={errorMessageAuth}/>
 
+          setErrorMessageAuth("Email ou senha incorretos.");
+          return <Alert type="error" message={errorMessageAuth} />;
         }
 
         console.error(
@@ -84,7 +83,6 @@ export function AuthProvider({ children }: IAuthProviderProps) {
           error.name,
           error.code,
           error.message
-          
         );
         setShowAlert(true);
         return setErrorMessageAuth(error.message);
@@ -106,6 +104,20 @@ export function AuthProvider({ children }: IAuthProviderProps) {
     }
   }
 
+  function updatePassword(email: string) {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("O email para troca de senha foi enviado");
+        router.push("/auth");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+        // ..
+      });
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       handleUser(currentUser);
@@ -122,7 +134,8 @@ export function AuthProvider({ children }: IAuthProviderProps) {
         signOut,
         signUp,
         errorMessageAuth,
-        resetAlert
+        resetAlert,
+        updatePassword,
       }}
     >
       {showAlert && <Alert type="error" message={errorMessageAuth} />}

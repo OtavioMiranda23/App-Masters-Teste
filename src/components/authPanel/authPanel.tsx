@@ -12,10 +12,11 @@ interface IAuthPanel {
   href: string;
   mensageHref: string;
   setEmail: (value: SetStateAction<string>) => void;
-  setPassword: (value: SetStateAction<string>) => void;
+  setPassword?: (value: SetStateAction<string>) => void;
   createSubmit: (event: FormEvent<any>) => void;
   submitNameEvent: string;
   forgetPass: boolean;
+  isForgetPassPage?: boolean;
 }
 
 export default function AuthPanel({
@@ -28,6 +29,7 @@ export default function AuthPanel({
   createSubmit,
   submitNameEvent,
   forgetPass,
+  isForgetPassPage= false
 }: IAuthPanel) {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
@@ -55,7 +57,7 @@ export default function AuthPanel({
   function handlePasswordChange(password: string) {
     const error = validatePassword(password);
     setPasswordError(error);
-    setPassword(password);
+    setPassword && setPassword(password);
   }
   return (
     <>
@@ -74,18 +76,21 @@ export default function AuthPanel({
               onChange={(e) => handleEmailChange(e.target.value)}
             />
             {emailError && <p className={styles.errorMensage}>{emailError}</p>}
+            {!isForgetPassPage && <>
             <label>Password:</label>
             <input
-              className={styles.input}
-              type="password"
-              onChange={(e) => handlePasswordChange(e.target.value)}
+            className={styles.input}
+            type="password"
+            onChange={(e) => handlePasswordChange(e.target.value)}
             />
             {passwordError && <p className={styles.errorMensage}>{passwordError}</p>}
+            </>
+          }
             <button className={emailError || passwordError ? styles.buttonDisable : styles.button} onClick={(e) => createSubmit(e)}>
               {submitNameEvent}
             </button>
             {forgetPass && (
-              <Link className={styles.link} href="/">
+              <Link className={styles.link} href="/auth/forgetPassword">
                 Esqueci a senha!
               </Link>
             )}
