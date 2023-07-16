@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   User,
   onAuthStateChanged,
-  AuthErrorCodes,
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -33,48 +32,70 @@ export function AuthProvider({ children }: IAuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessageAuth, setErrorMessageAuth] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-
+  const [showAlertError, setShowAlertError] = useState(false);
+  const [sucessMessageAuth, setSucessMessageAuth] = useState<string>("");
+  const [showAlertSucess, setShowAlertSucess] = useState(false);
   const router = useRouter();
 
   function handleUser(user: User | null) {
     setUser(user);
   }
   const resetAlert = () => {
-    setShowAlert(false);
+    setShowAlertError(false);
     setErrorMessageAuth("");
   };
 
   async function signUp(email: string, password: string) {
+    setShowAlertSucess(false);
     try {
+      resetAlert();
       setIsLoading(true);
-      // TODO: Verificar se email é um email
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      setShowAlertSucess(true);
+      setSucessMessageAuth("Usuário criado com sucesso");
       router.push("/");
       setUser(res.user);
-    } catch (e) {
-      console.error("Erro ao logar usuário!", e);
-      //alert("Erro ao cadastrar usuário");
+    } catch (error) {
+      setShowAlertError(true);
+
+      if (error instanceof FirebaseError) {
+        if (error.message.includes("auth/user-not-found") || error.message.includes("auth/wrong-password")) {
+          console.error(error.message);
+          return setErrorMessageAuth("Email ou senha incorretos.");
+        }
+
+        console.error(
+          "Erro ao logar usuário!",
+          error.name,
+          error.code,
+          error.message
+        );
+        return setErrorMessageAuth(error.message);
+      }
+
+      setErrorMessageAuth("Ocorreu algo errado");
     } finally {
       setIsLoading(false);
     }
   }
 
   async function signIn(email: string, password: string) {
+    setShowAlertSucess(false);
     try {
       setIsLoading(true);
       resetAlert();
       const res = await signInWithEmailAndPassword(auth, email, password);
+      setShowAlertSucess(true);
+      setSucessMessageAuth("Usuário logado com sucesso");
       setUser(res.user);
       router.push("/");
-      alert("Usuário logado com sucesso");
     } catch (error) {
-      setShowAlert(true);
+      setShowAlertError(true);
 
       if (error instanceof FirebaseError) {
-        if (error.message.includes("auth/user-not-found")) {
+        if (error.message.includes("auth/user-not-found" ) || error.message.includes("auth/wrong-password")) {
           console.error(error.message);
-          setErrorMessageAuth("Email ou senha incorretos.");
+          return setErrorMessageAuth("Email ou senha incorretos.");
         }
 
         console.error(
@@ -103,15 +124,32 @@ export function AuthProvider({ children }: IAuthProviderProps) {
   }
 
   function updatePassword(email: string) {
+    setShowAlertSucess(false);
+    resetAlert();
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        alert("O email para troca de senha foi enviado");
+        setSucessMessageAuth("Um email para a troca de senha foi enviado");
+        setShowAlertSucess(true);
+
         router.push("/auth");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
+        setShowAlertError(true);
+
+        if (error instanceof FirebaseError) {
+          if (error.message.includes("auth/user-not-found")) {
+            console.error(error.message);
+            return setErrorMessageAuth("Email ou senha incorretos.");
+          }
+
+          console.error(
+            "Erro ao logar usuário!",
+            error.name,
+            error.code,
+            error.message
+          );
+          return setErrorMessageAuth(error.message);
+        }
       });
   }
 
@@ -135,7 +173,8 @@ export function AuthProvider({ children }: IAuthProviderProps) {
         updatePassword,
       }}
     >
-      {showAlert && <Alert type="error" message={errorMessageAuth} />}
+      {showAlertError && <Alert type="error" message={errorMessageAuth} />}
+      {showAlertSucess && <Alert type="success" message={sucessMessageAuth} />}
       {children}
     </AuthContext.Provider>
   );
