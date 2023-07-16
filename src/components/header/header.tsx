@@ -24,7 +24,7 @@ export function Header() {
     sortedByRating,
     games,
     toggleFuzzySearch,
-    genre
+    genre,
   } = useSearchContext();
 
   const uniqueGenre = Array.from(
@@ -75,7 +75,10 @@ export function Header() {
             className={styles.input}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <input type="checkbox" onChange={() => toggleFuzzySearch()} />
+          <div className={styles.buscaAmpla}>
+            <input type="checkbox" onChange={() => toggleFuzzySearch()} />
+                <p>Busca ampla</p>
+          </div>
           {user && (
             <div className={styles.filters}>
               <p>Filtros</p>

@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding-bottom: 1rem;
 }
 .logoContainer {
   display: flex;
@@ -115,4 +116,10 @@
 }
 .userImage {
   cursor: pointer;
+}
+.buscaAmpla { 
+color: #fff;
+display: flex;
+font-size: .8rem;
+gap: .5rem;
 }
