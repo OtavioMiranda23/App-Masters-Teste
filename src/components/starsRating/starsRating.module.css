@@ -1,5 +1,6 @@
 .rating-stars {
     display: inline-block;
+    caret-color: transparent;
   }
   
   .star {
@@ -7,6 +8,7 @@
     color: #ccc;
     cursor: pointer;
     transition: transform 0.3s ease;
+    caret-color: transparent;
 
   }
   

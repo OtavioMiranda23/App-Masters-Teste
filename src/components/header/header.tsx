@@ -4,12 +4,8 @@ import styles from "./header.module.css";
 import Link from "next/link";
 import useSearchContext from "@/hooks/useSearchContext";
 import { useAuth } from "@/context/AuthContext";
-
-import { useState } from "react";
-import { sortDir } from "@/context/SearchContext";
 import { IGames } from "@/types/games";
 import HamburguerMenu from "../hamburguer/hamburguer";
-import { DropMenu } from "../dropMenu/dropMenu";
 import { useRating } from "@/context/RatingContext";
 
 export function Header() {
@@ -77,7 +73,7 @@ export function Header() {
           />
           <div className={styles.buscaAmpla}>
             <input type="checkbox" onChange={() => toggleFuzzySearch()} />
-                <p>Busca ampla</p>
+            <p>Busca ampla</p>
           </div>
           {user && (
             <div className={styles.filters}>
