@@ -23,6 +23,8 @@ export function Header() {
     filterByLiked,
     sortedByRating,
     games,
+    toggleFuzzySearch,
+    genre
   } = useSearchContext();
 
   const uniqueGenre = Array.from(
@@ -39,10 +41,11 @@ export function Header() {
         </div>
       </Link>
       <div className={styles.containerMenu}>
-        <div className={styles.containerSearchGenreMenu} style={{}}>
-          <HamburguerMenu />
+        <HamburguerMenu />
+        <div className={styles.containerSearchGenreMenu}>
           <div className={styles.dropdown}>
             <select
+              value={genre}
               className={`${styles.dropdownSelect} ${styles.input}`}
               onChange={(e) => setGenre(e.target.value)}
             >
@@ -72,6 +75,7 @@ export function Header() {
             className={styles.input}
             onChange={(e) => setSearch(e.target.value)}
           />
+          <input type="checkbox" onChange={() => toggleFuzzySearch()} />
           {user && (
             <div className={styles.filters}>
               <p>Filtros</p>

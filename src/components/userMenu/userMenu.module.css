@@ -1,27 +1,25 @@
 .container {
-
-    background: var(--background-color-white);
-    overflow: hidden;
-    width: 100%;
-
+  background: var(--background-color-white);
+  overflow: hidden;
+  width: 100%;
+  padding: 0.5rem;
 }
 .content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-bottom: .4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .bemVindo {
-    color: var(--text-title-primary-dark);
-    font-size: 1rem;
-    max-width: 80%;
-    overflow: hidden;
+  color: var(--text-title-primary-dark);
+  font-size: 1rem;
+  max-width: 80%;
+  overflow: hidden;
 }
-.entrar{ 
-    text-decoration: none;
-    color: var(--text-title-primary-dark);
-    border-bottom: 1px solid ;
+.entrar {
+  text-decoration: none;
+  color: var(--text-title-primary-dark);
+  border-bottom: 1px solid;
 }

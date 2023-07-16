@@ -70,12 +70,11 @@ export function AuthProvider({ children }: IAuthProviderProps) {
       alert("Usuário logado com sucesso");
     } catch (error) {
       setShowAlert(true);
+
       if (error instanceof FirebaseError) {
         if (error.message.includes("auth/user-not-found")) {
           console.error(error.message);
-
           setErrorMessageAuth("Email ou senha incorretos.");
-          return <Alert type="error" message={errorMessageAuth} />;
         }
 
         console.error(
@@ -84,10 +83,9 @@ export function AuthProvider({ children }: IAuthProviderProps) {
           error.code,
           error.message
         );
-        setShowAlert(true);
         return setErrorMessageAuth(error.message);
       }
-      setShowAlert(true);
+
       setErrorMessageAuth("Ocorreu algo errado");
     } finally {
       setIsLoading(false);
@@ -114,7 +112,6 @@ export function AuthProvider({ children }: IAuthProviderProps) {
         const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage);
-        // ..
       });
   }
 

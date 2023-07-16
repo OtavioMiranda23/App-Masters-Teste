@@ -10,7 +10,7 @@ import { IGames } from "@/types/games";
   export function filterByGenre(games: IGames[], query: string) {
     let searchQuery = query.toLowerCase();
     return games.filter((game) =>
-      game.genre.toLowerCase().includes(searchQuery)
+      game.genre.toLowerCase() === searchQuery
     );
   }
 

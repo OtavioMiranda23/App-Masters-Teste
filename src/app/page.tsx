@@ -30,11 +30,8 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-
       <div>
         {isFetching && (
-     
-
             <Image
               src="/loader.svg"
               alt="Loading icon"
@@ -42,11 +39,9 @@ export default function Home() {
               width={100}
               className={styles.loader}
             />
-        
         )}
       </div>
       <p className={styles.errorMensage}>{errorMensage}</p>
-
       {errorMensage === null && <UserMenu />}
       <section className={styles.section}>
         {errorMensage === null &&

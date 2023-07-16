@@ -22,8 +22,8 @@ interface ISearchContext {
   resetFilters: () => any;
   toggleSortByRating: () => any;
   sortedByRating: sortDir | null;
-  games: IGames[]
-
+  toggleFuzzySearch: () => any;
+  games: IGames[];
 }
 
 const SearchContext = createContext<ISearchContext>({
@@ -36,17 +36,17 @@ const SearchContext = createContext<ISearchContext>({
   setFilterLiked: () => {},
   resetFilters: () => {},
   toggleSortByRating: () => {},
+  toggleFuzzySearch: () => {},
   filterByLiked: false,
   sortedByRating: null,
-  games: []
-
+  games: [],
 });
 
-export function SearchProvider({
-  children,
-}: {
+interface ISearchProvider {
   children: JSX.Element | JSX.Element[];
-}) {
+}
+
+export function SearchProvider({ children }: ISearchProvider) {
   const { user } = useAuth();
   const { getRating, getRatedGames } = useRating();
   const [games, setGames] = useState<IGames[]>([]);
@@ -56,23 +56,25 @@ export function SearchProvider({
   const [selectedGenre, setSelectedGenre] = useState("");
   const [filterByLiked, setFilterByLiked] = useState(false);
   const [sortedByRating, setSortedByRating] = useState<sortDir | null>(null);
-//   const [advancedSearchResults, setAdvancedSearchResults] = useState<IGames[]>([]);
+  const [fuzzySearch, setFuzzySearch] = useState<boolean>(false);
 
-//  const advancedSearch = (searchTerm: string) => {
-//     const fuseOptions = { 
-//       keys: ['title']
-//     }
-//     const fuse = new Fuse(games, fuseOptions);
-//     const result = fuse.search(searchTerm);
-//     const selectedData = result.map((item) => item.item);
+  const advancedSearch = (games: IGames[], searchTerm: string) => {
+    const fuseOptions = {
+      keys: ["title"],
+      threshold: 0.4,
+    };
+    const fuse = new Fuse(games, fuseOptions);
+    const result = fuse.search(searchTerm);
+    return result.map((item) => item.item);
+  };
 
-//     setAdvancedSearchResults(selectedData);
-
-//  }
-  
   function restoreGameList() {
     setSelectedGenre("");
     setSearch("");
+  }
+
+  function toggleFuzzySearch() {
+    setFuzzySearch((s) => !s);
   }
 
   function toggleFilterLiked() {
@@ -149,7 +151,11 @@ export function SearchProvider({
     let result = games;
 
     if (isQuery) {
-      result = filterByTitle(result, search);
+      if (fuzzySearch) {
+        result = advancedSearch(result, search);
+      } else {
+        result = filterByTitle(result, search);
+      }
     }
 
     if (selectedGenre) {
@@ -176,6 +182,7 @@ export function SearchProvider({
     filterByLiked,
     sortByRating,
     sortedByRating,
+    fuzzySearch,
   ]);
 
   return (
@@ -192,8 +199,8 @@ export function SearchProvider({
         toggleSortByRating,
         filterByLiked,
         sortedByRating,
-        games
-        
+        games,
+        toggleFuzzySearch,
       }}
     >
       {children}

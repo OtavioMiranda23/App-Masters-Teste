@@ -7,7 +7,7 @@ export function Footer() {
       <a 
       className={styles.content}
       href="https://github.com/OtavioMiranda23" target="_blank">
-        Obrigado pela visita!
+        Feito com Next.js 
       </a>
       <p>&#x1F603;</p>
     </footer>
